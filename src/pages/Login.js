@@ -31,16 +31,17 @@ const Login = () => {
       );
 
       const userType = userTypeResponse.data;
-
+      
       // Navigate based on user type
       if (userType === "Student") {
-        navigate(`/studentdashboard`);
+        navigate(`/studentdashboard/${username}`);
       } else if (userType === "Teacher") {
-        navigate(`/teacherdashboard`);
+        navigate(`/teacherdashboard/${username}`);
       } else {
         console.log("Unknown user type");
       }
       console.log("Login successful:", loginResponse.data);
+      
     } catch (error) {
       console.error("Error logging in:", error);
       alert("Login unsuccessful!");
