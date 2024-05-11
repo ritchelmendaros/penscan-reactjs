@@ -3,7 +3,7 @@ import '../css/LandingPage.css';
 const TeacherDashboard = () => {
   return (
     <>
-    <h2>Dashboard</h2>
+    <h2>TeacherDashboard</h2>
     </>
   );
 }

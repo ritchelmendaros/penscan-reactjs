@@ -25,9 +25,22 @@ const Login = () => {
         }
       );
 
-      console.log("Login successful:", loginResponse.data);
+      // Fetch user type
+      const userTypeResponse = await axios.get(
+        `http://localhost:8080/api/users/getusertype?username=${username}`
+      );
 
-      navigate(`/teacherdashboard`);
+      const userType = userTypeResponse.data;
+
+      // Navigate based on user type
+      if (userType === "Student") {
+        navigate(`/studentdashboard`);
+      } else if (userType === "Teacher") {
+        navigate(`/teacherdashboard`);
+      } else {
+        console.log("Unknown user type");
+      }
+      console.log("Login successful:", loginResponse.data);
     } catch (error) {
       console.error("Error logging in:", error);
       alert("Login unsuccessful!");

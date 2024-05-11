@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TeacherDashboard from './pages/TeacherDashboard';
+import StudentDashboard from './pages/StudentDashboard';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} /> 
         <Route path="/teacherdashboard" element={<TeacherDashboard />} />
+        <Route path="/studentdashboard" element={<StudentDashboard />} />
       </Routes>
     </BrowserRouter>
   );
