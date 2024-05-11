@@ -62,3 +62,33 @@
     cursor: pointer;
   }
   
+  .class-names-container {
+    display: flex;
+    gap: 100px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 20px;
+  }
+
+  .class-names-container:hover {
+    cursor: pointer;
+  }
+  
+  .class-name {
+    width: 200px;
+    height: 150px;
+    background-color: #002C66;
+    border-radius: 5px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .class-square {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+  }
+  
+  
