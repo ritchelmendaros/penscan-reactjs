@@ -1,0 +1,64 @@
+.teacher-dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    padding-right: 30px;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 60px;
+    width: 60px;
+  }
+  
+  .dashboard-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    margin-left: 5px;
+    color: #002C66;
+  }
+  
+  .action-container {
+    display: flex;
+  }
+  
+  .user-icon-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-icon {
+    width: 40px;
+    height: 40px; 
+  }
+  
+  .classes-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    padding-left: 80px;
+    padding-right: 30px;
+  }
+  
+  .classes-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    margin-left: 5px;
+    color: #002C66;
+  }
+  
+  .plus-icon {
+    width: 40px;
+    height: 40px; 
+  }
+
+  .plus-icon:hover {
+    cursor: pointer;
+  }
+  

@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TeacherDashboard from './pages/TeacherDashboard';
 import StudentDashboard from './pages/StudentDashboard';
+import CreateClass from './pages/CreateClass';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} /> 
         <Route path="/teacherdashboard/:username" element={<TeacherDashboard />} />
         <Route path="/studentdashboard/:username" element={<StudentDashboard />} />
+        <Route path="/createclass/:username" element={<CreateClass />} />
       </Routes>
     </BrowserRouter>
   );
