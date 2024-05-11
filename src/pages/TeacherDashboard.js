@@ -8,6 +8,7 @@ const TeacherDashboard = () => {
   const navigate = useNavigate();
   const { username } = useParams();
   const [userId, setUserId] = useState(null);
+  const [userClasses, setUserClasses] = useState([]);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -22,6 +23,22 @@ const TeacherDashboard = () => {
 
     fetchUserId();
   }, [username]);
+
+  useEffect(() => {
+    const fetchUserClasses = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/classes/getclassbyteacherid?teacherid=${userId}`);
+        setUserClasses(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching user classes:", error);
+      }
+    };
+
+    if (userId) {
+      fetchUserClasses();
+    }
+  }, [userId]);
 
   const handleAddClassClick = () => {
     navigate(`/createclass/${username}`);
