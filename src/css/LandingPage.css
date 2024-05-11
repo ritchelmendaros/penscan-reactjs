@@ -1,0 +1,20 @@
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+  }
+  
+  .landing-page-image {
+    width: 300px; 
+    height: auto;
+  }
+  
+  .landing-page-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    margin-top: 20px; 
+    color: #002C66;
+  }
+  
