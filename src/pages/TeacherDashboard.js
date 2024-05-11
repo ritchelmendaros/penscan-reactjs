@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../css/TeacherDashboard.css"; 
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const TeacherDashboard = () => {
 
   const navigate = useNavigate();
   const { username } = useParams();
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/users/getuserid?username=${username}`);
+        setUserId(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching user ID:", error);
+      }
+    };
+
+    fetchUserId();
+  }, [username]);
 
   const handleAddClassClick = () => {
     navigate(`/createclass/${username}`);
