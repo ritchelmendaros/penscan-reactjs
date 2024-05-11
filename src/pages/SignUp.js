@@ -7,6 +7,7 @@ const SignUp = () => {
       <div className="content">
         <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" />
         <h2 className="signup-text">SIGN UP</h2>
+        <p className="register-text">Already have an account? <a href="/register">Login</a></p>
         <div className="input-container">
           <input type="text" placeholder="First Name" className="input-field" />
           <input type="text" placeholder="Last Name" className="input-field" />

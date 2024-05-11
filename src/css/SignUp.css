@@ -75,4 +75,11 @@
     color: #fff;
   }
   
+  .register-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    margin-top: 5x;
+    font-weight: bold;
+    color: #002C66;
+  }
   

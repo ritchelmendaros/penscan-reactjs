@@ -1,5 +1,5 @@
-import React from 'react';
-import '../css/Login.css';
+import React from "react";
+import "../css/Login.css";
 
 const Login = () => {
   return (
@@ -9,13 +9,19 @@ const Login = () => {
         <h2 className="login-text">LOGIN</h2>
         <div className="input-container">
           <input type="text" placeholder="Username" className="input-field" />
-          <input type="password" placeholder="Password" className="input-field" />
-          <p className="register-text">Doesn't have an account? <a href="/register">Register</a></p>
+          <input
+            type="password"
+            placeholder="Password"
+            className="input-field"
+          />
+          <p className="register-text">
+            Doesn't have an account? <a href="/register">Register</a>
+          </p>
           <button className="login-button">LOGIN</button>
         </div>
       </div>
-        </div>
-    );
-}
+    </div>
+  );
+};
 
 export default Login;
