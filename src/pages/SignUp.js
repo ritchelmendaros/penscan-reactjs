@@ -38,14 +38,21 @@ const SignUp = () => {
     }
   };
 
+  const handleLoginClick = () => {
+    navigate(`/login`);
+  };
+
   return (
     <div className="signup-container">
       <div className="content">
         <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" />
         <h2 className="signup-text">SIGN UP</h2>
         <p className="register-text">
-          Already have an account? <a href="/login">Login</a>
-        </p>
+            Already have an account?{" "}
+            <span className="login-link" onClick={handleLoginClick}>
+              <u>Login</u>
+            </span>
+          </p>
         <div className="input-container">
           <input
             type="text"

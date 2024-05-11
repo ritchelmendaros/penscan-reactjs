@@ -82,4 +82,8 @@
     font-weight: bold;
     color: #002C66;
   }
+
+  .login-link {
+    cursor: pointer;
+  }
   
