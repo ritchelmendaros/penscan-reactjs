@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import Axios
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 
 const Login = () => {
-  const navigate = useNavigate(); // Use navigate hook
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,7 +16,7 @@ const Login = () => {
         "http://localhost:8080/api/users/login",
         {
           username: username,
-          password: password, 
+          password: password,
         },
         {
           headers: {
@@ -29,11 +28,14 @@ const Login = () => {
       console.log("Login successful:", loginResponse.data);
 
       navigate(`/teacherdashboard`);
-      
     } catch (error) {
       console.error("Error logging in:", error);
       alert("Login unsuccessful!");
     }
+  };
+
+  const handleRegisterClick = () => {
+    navigate(`/signup`);
   };
 
   return (
@@ -57,9 +59,11 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <p className="register-text">
-            Doesn't have an account? <a href="/register">Register</a>
+            Doesn't have an account?{" "}
+            <span className="register-link" onClick={handleRegisterClick}>
+              <u>Register</u>
+            </span>
           </p>
-          {error && <p className="error-message">{error}</p>}
           <button className="login-button" onClick={handleLogin}>
             LOGIN
           </button>
