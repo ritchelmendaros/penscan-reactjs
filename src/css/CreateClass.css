@@ -1,4 +1,4 @@
-.teacher-dashboard-container {
+.createclass-dashboard-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,7 +39,7 @@
     cursor: pointer;
   }
   
-  .classes-container {
+  .createclass-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,49 +48,51 @@
     padding-right: 30px;
   }
   
-  .classes-text {
+  .createclass-text {
     font-family: 'Inter', sans-serif;
     font-weight: bold;
     margin-left: 5px;
     color: #002C66;
   }
   
-  .plus-icon {
-    width: 40px;
-    height: 40px; 
-  }
 
-  .plus-icon:hover {
-    cursor: pointer;
-  }
-  
-  .class-names-container {
+  .input-container {
     display: flex;
-    gap: 100px;
-    padding-left: 80px;
-    padding-right: 80px;
-    padding-top: 20px;
-  }
-
-  .class-names-container:hover {
-    cursor: pointer;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    margin-top: 50px; /* Adjust top margin as needed */
   }
   
-  .class-name {
-    width: 200px;
-    height: 150px;
-    background-color: #002C66;
-    border-radius: 5px;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .class-square {
-    color: white;
+  .class-name-input {
     font-family: 'Inter', sans-serif;
     font-weight: bold;
+    width: 300px;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    border: none;
+    color: #002C66;
+    background-color: #D9D9D9;
+  }
+
+  .class-name-input::placeholder {
+    color: #595959; 
   }
   
+  .create-class-button {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: #002C66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .create-class-button:hover {
+    background-color: #004080;
+  }
   
