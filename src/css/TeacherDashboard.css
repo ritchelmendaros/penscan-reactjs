@@ -86,7 +86,14 @@
     justify-content: center;
     align-items: center;
     letter-spacing: 1px;
+    transition: width 0.3s, height 0.3s;
   }
+  
+  .class-name:hover {
+    width: 230px;
+    height: 170px;
+  }
+  
   
   .class-square {
     color: white;

@@ -68,8 +68,8 @@ const CreateClass = () => {
           type="text"
           className="class-name-input"
           placeholder="Enter Class Name"
-          value={classname} // Bind value to state
-          onChange={handleClassnameChange} // Handle input change
+          value={classname}
+          onChange={handleClassnameChange} 
         />
         <button className="create-class-button" onClick={handleCreateClass}>
           CREATE
