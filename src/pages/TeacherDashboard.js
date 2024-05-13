@@ -32,7 +32,7 @@ const TeacherDashboard = () => {
           `http://localhost:8080/api/classes/getclassesbyteacherid?teacherid=${userId}`
         );
         setUserClasses(response.data);
-        console.log("User Classes:", response.data); // Add this line
+        console.log("User Classes:", response.data); 
       } catch (error) {
         console.error("Error fetching user classes:", error);
       }

@@ -8,6 +8,7 @@ const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -44,12 +45,16 @@ const Login = () => {
       
     } catch (error) {
       console.error("Error logging in:", error);
-      alert("Login unsuccessful!");
+      setErrorMessage("Incorrect username or password");
     }
   };
 
   const handleRegisterClick = () => {
     navigate(`/signup`);
+  };
+
+  const handleCloseError = () => {
+    setErrorMessage("");
   };
 
   return (
@@ -81,6 +86,16 @@ const Login = () => {
           <button className="login-button" onClick={handleLogin}>
             LOGIN
           </button>
+          {errorMessage && (
+            <div className="popup">
+              <div className="popup-content">
+                <p className="error-message">{errorMessage}</p>
+                <button className="ok-button" onClick={handleCloseError}>
+                  OK
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
