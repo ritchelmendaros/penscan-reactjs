@@ -35,23 +35,26 @@ const CreateClass = () => {
   }
 
   const handleCreateClass = async () => {
-    if (!classname) {
-      setErrorMessage("Class name cannot be empty.");
-      return;
-    }
-
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/classes/add",
-        { classname, teacherid: userId }
+      const response = await axios.get(
+        `http://localhost:8080/api/classes/checkclass?classname=${classname}&teacherid=${userId}`
       );
-      console.log("Class added:", response.data);
-      navigate(`/teacherdashboard/${username}`);
+  
+      if (response.data) {
+        setErrorMessage("Class name already exists.");
+      } else {
+        const addClassResponse = await axios.post(
+          "http://localhost:8080/api/classes/add",
+          { classname, teacherid: userId }
+        );
+        console.log("Class added:", addClassResponse.data);
+        navigate(`/teacherdashboard/${username}`);
+      }
     } catch (error) {
       console.error("Error creating class:", error);
     }
   };
-
+  
   const handleCloseError = () => {
     setErrorMessage("");
   };

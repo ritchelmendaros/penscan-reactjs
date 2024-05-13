@@ -80,8 +80,7 @@
   .class-names-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 30px;
+    gap: 70px;
     padding-left: 80px;
     padding-right: 80px;
     padding-top: 20px;
