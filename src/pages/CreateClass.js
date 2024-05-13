@@ -4,11 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const CreateClass = () => {
-
   const navigate = useNavigate();
   const { username } = useParams();
   const [userId, setUserId] = useState(null);
   const [classname, setClassname] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -30,7 +30,16 @@ const CreateClass = () => {
     setClassname(event.target.value);
   };
 
+  const handleDashboardOnclick = () => {
+    navigate(`/teacherdashboard/${username}`);
+  }
+
   const handleCreateClass = async () => {
+    if (!classname) {
+      setErrorMessage("Class name cannot be empty.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8080/api/classes/add",
@@ -43,12 +52,16 @@ const CreateClass = () => {
     }
   };
 
+  const handleCloseError = () => {
+    setErrorMessage("");
+  };
+
   return (
     <>
       <div className="createclass-dashboard-container">
         <div className="logo-container">
-          <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" />
-          <p className="dashboard-text">Dashboard</p>
+          <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" onClick={handleDashboardOnclick}/>
+          <p className="dashboard-text" onClick={handleDashboardOnclick}>Dashboard</p>
         </div>
         <div className="action-container">
           <div className="user-icon-container">
@@ -74,6 +87,16 @@ const CreateClass = () => {
         <button className="create-class-button" onClick={handleCreateClass}>
           CREATE
         </button>
+        {errorMessage && (
+          <div className="popup">
+            <div className="popup-content">
+              <p className="error-message">{errorMessage}</p>
+              <button className="ok-button" onClick={handleCloseError}>
+                OK
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

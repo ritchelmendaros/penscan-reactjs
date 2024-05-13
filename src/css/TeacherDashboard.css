@@ -75,29 +75,40 @@
   .class-names-container:hover {
     cursor: pointer;
   }
+
+  
+  .class-names-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 20px;
+  }
   
   .class-name {
-    width: 200px;
-    height: 150px;
-    background-color: #002C66;
+    width: calc(18% - 30px);
+    height: 170px;
+    background-color: #002c66;
     border-radius: 5px;
     font-size: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     letter-spacing: 1px;
+    text-align: center;
     transition: transform 0.3s;
+    line-height: 28px;
   }
   
   .class-name:hover {
-    transform: scale(1.15); 
+    transform: scale(1.15);
   }
-  
   
   .class-square {
     color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-weight: bold;
   }
-  
   

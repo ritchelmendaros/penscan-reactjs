@@ -32,7 +32,7 @@ const TeacherDashboard = () => {
           `http://localhost:8080/api/classes/getclassesbyteacherid?teacherid=${userId}`
         );
         setUserClasses(response.data);
-        console.log("User Classes:", response.data); 
+        console.log("User Classes:", response.data);
       } catch (error) {
         console.error("Error fetching user classes:", error);
       }
@@ -47,12 +47,23 @@ const TeacherDashboard = () => {
     navigate(`/createclass/${username}`);
   };
 
+  const handleDashboardOnclick = () => {
+    navigate(`/teacherdashboard/${username}`);
+  };
+
   return (
     <>
       <div className="teacher-dashboard-container">
         <div className="logo-container">
-          <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" />
-          <p className="dashboard-text">Dashboard</p>
+          <img
+            src="/images/PenScan_Logo.png"
+            alt="Logo"
+            className="logo"
+            onClick={handleDashboardOnclick}
+          />
+          <p className="dashboard-text" onClick={handleDashboardOnclick}>
+            Dashboard
+          </p>
         </div>
         <div className="action-container">
           <div className="user-icon-container">
