@@ -11,9 +11,17 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    // Client-side validation
+    if (!firstname || !lastname || !username || !password || !userType) {
+      setErrorMessage("All fields are required.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8080/api/users/register",
@@ -34,12 +42,16 @@ const SignUp = () => {
       navigate("/login");
     } catch (error) {
       console.error("Error registering user:", error);
-      alert("Registration unsuccessful!");
+      setErrorMessage("Username already exists!");
     }
   };
 
   const handleLoginClick = () => {
     navigate(`/login`);
+  };
+
+  const handleCloseError = () => {
+    setErrorMessage("");
   };
 
   return (
@@ -48,11 +60,11 @@ const SignUp = () => {
         <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" />
         <h2 className="signup-text">SIGN UP</h2>
         <p className="register-text">
-            Already have an account?{" "}
-            <span className="login-link" onClick={handleLoginClick}>
-              <u>Login</u>
-            </span>
-          </p>
+          Already have an account?{" "}
+          <span className="login-link" onClick={handleLoginClick}>
+            <u>Login</u>
+          </span>
+        </p>
         <div className="input-container">
           <input
             type="text"
@@ -105,6 +117,16 @@ const SignUp = () => {
           <button className="signup-button" onClick={handleSignUp}>
             SIGN UP
           </button>
+          {errorMessage && (
+            <div className="popup">
+              <div className="popup-content">
+                <p className="error-message">{errorMessage}</p>
+                <button className="ok-button" onClick={handleCloseError}>
+                  OK
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
