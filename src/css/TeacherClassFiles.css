@@ -1,0 +1,113 @@
+.teacher-dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    padding-right: 30px;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 60px;
+    width: 60px;
+  }
+  
+  .dashboard-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    margin-left: 5px;
+    color: #002C66;
+    cursor: pointer;
+  }
+  
+  .action-container {
+    display: flex;
+  }
+  
+  .user-icon-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-icon {
+    width: 40px;
+    height: 40px; 
+    cursor: pointer;
+  }
+  
+  .classes-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    padding-left: 80px;
+    padding-right: 30px;
+  }
+  
+  .classes-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    margin-left: 5px;
+    color: #002C66;
+  }
+  
+  .plus-icon {
+    width: 40px;
+    height: 40px; 
+  }
+
+  .plus-icon:hover {
+    cursor: pointer;
+  }
+  
+  .class-names-container {
+    display: flex;
+    gap: 100px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 20px;
+  }
+
+  .class-names-container:hover {
+    cursor: pointer;
+  }
+
+  
+  .class-names-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 70px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 20px;
+  }
+  
+  .class-name {
+    width: calc(18% - 30px);
+    height: 170px;
+    background-color: #002c66;
+    border-radius: 5px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 1px;
+    text-align: center;
+    transition: transform 0.3s;
+    line-height: 28px;
+  }
+  
+  .class-name:hover {
+    transform: scale(1.15);
+  }
+  
+  .class-square {
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+  }
+    
