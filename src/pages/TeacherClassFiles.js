@@ -84,13 +84,13 @@ const TeacherClassFiles = () => {
           onClick={handleAddStudentClick}
         />
       </div>
-      <div className="class-names-container">
+      {/* <div className="class-names-container">
         {userClasses.map((classData, index) => (
           <div className="class-name" key={index}>
             <div className="class-square">{classData.classname}</div>
           </div>
         ))}
-      </div>
+      </div> */}
     </>
   );
 };

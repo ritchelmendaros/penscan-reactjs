@@ -50,6 +50,9 @@ const TeacherDashboard = () => {
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
   };
+  const handleClassClick = (classId) => {
+    navigate(`/teacherclassfiles/${classId}/${username}`);
+  };
 
   return (
     <>
@@ -86,7 +89,11 @@ const TeacherDashboard = () => {
       </div>
       <div className="class-names-container">
         {userClasses.map((classData, index) => (
-          <div className="class-name" key={index}>
+          <div
+            className="class-name"
+            key={index}
+            onClick={() => handleClassClick(classData.classid)}
+          >
             <div className="class-square">{classData.classname}</div>
           </div>
         ))}

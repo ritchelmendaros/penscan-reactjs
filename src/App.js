@@ -19,7 +19,7 @@ function App() {
         <Route path="/teacherdashboard/:username" element={<TeacherDashboard />} />
         <Route path="/studentdashboard/:username" element={<StudentDashboard />} />
         <Route path="/createclass/:username" element={<CreateClass />} />
-        <Route path="/teacherclassfiles/:username" element={<TeacherClassFiles />} />
+        <Route path="/teacherclassfiles/:classid/:username" element={<TeacherClassFiles />} />
         <Route path="/addstudent/:username" element={<AddStudent />} />
       </Routes>
     </BrowserRouter>
