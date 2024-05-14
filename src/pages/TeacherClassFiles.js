@@ -6,6 +6,7 @@ import axios from "axios";
 const TeacherClassFiles = () => {
   const navigate = useNavigate();
   const { username } = useParams();
+  const { classid } = useParams();
   const [userId, setUserId] = useState(null);
   const [userClasses, setUserClasses] = useState([]);
 
@@ -44,7 +45,7 @@ const TeacherClassFiles = () => {
   }, [userId]);
 
   const handleAddStudentClick = () => {
-    navigate(`/addstudent/${username}`);
+    navigate(`/addstudent/${classid}/${username}`);
   };
 
   const handleDashboardOnclick = () => {

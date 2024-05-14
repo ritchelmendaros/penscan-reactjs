@@ -6,8 +6,9 @@ import axios from "axios";
 const AddStudent = () => {
   const navigate = useNavigate();
   const { username } = useParams();
+  const { classid } = useParams();
   const [userId, setUserId] = useState(null);
-  const [classname, setClassname] = useState("");
+  const [studentName, setStudentName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -26,8 +27,8 @@ const AddStudent = () => {
     fetchUserId();
   }, [username]);
 
-  const handleStudentnameChange = (event) => {
-    setClassname(event.target.value);
+  const handleStudentNameChange = (event) => {
+    setStudentName(event.target.value);
   };
 
   const handleDashboardOnclick = () => {
@@ -36,22 +37,15 @@ const AddStudent = () => {
 
   const handleAddStudent = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/classes/checkclass?classname=${classname}&teacherid=${userId}`
+      const addStudentResponse = await axios.post(
+        "http://localhost:8080/api/students/addstudent",
+        { userid: userId, classesid: classid }
       );
-  
-      if (response.data) {
-        setErrorMessage("Class name already exists.");
-      } else {
-        const addClassResponse = await axios.post(
-          "http://localhost:8080/api/classes/add",
-          { classname, teacherid: userId }
-        );
-        console.log("Class added:", addClassResponse.data);
-        navigate(`/teacherclassfiles/${username}`);
-      }
+      console.log("Student added:", addStudentResponse.data);
+      navigate(`/teacherclassfiles/${classid}/${username}`);
     } catch (error) {
-      console.error("Error creating class:", error);
+      console.error("Error adding student:", error);
+      setErrorMessage("Error adding student. Please try again.");
     }
   };
   
@@ -84,8 +78,8 @@ const AddStudent = () => {
           type="text"
           className="class-name-input"
           placeholder="Enter Student Name"
-          value={classname}
-          onChange={handleStudentnameChange} 
+          value={studentName}
+          onChange={handleStudentNameChange} 
         />
         <button className="addstudent-button" onClick={handleAddStudent}>
           ADD
