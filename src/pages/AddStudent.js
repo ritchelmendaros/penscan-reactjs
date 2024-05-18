@@ -9,6 +9,8 @@ const AddStudent = () => {
   const { classid } = useParams();
   const [userId, setUserId] = useState(null);
   const [studentName, setStudentName] = useState("");
+  const [studentUsername, setStudentUsername] = useState("");
+  const [studentuserId, setStudentUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [allStudents, setAllStudents] = useState([]);
 
@@ -23,7 +25,7 @@ const AddStudent = () => {
         console.error("Error fetching user ID:", error);
       }
     };
-
+  
     const fetchAllStudents = async () => {
       try {
         const response = await axios.get(
@@ -34,13 +36,38 @@ const AddStudent = () => {
         console.error("Error fetching all students:", error);
       }
     };
-
+  
     fetchUserId();
     fetchAllStudents();
   }, [username]);
+  
+  useEffect(() => {
+    if (studentUsername) {
+      fetchStudentIdByUsername(studentUsername);
+    }
+  }, [studentUsername]);
+
+  const fetchStudentIdByUsername = async (username) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/users/getuserid?username=${username}`
+      );
+      setStudentUserId(response.data);
+    } catch (error) {
+      console.error("Error fetching user ID:", error);
+    }
+  };
 
   const handleStudentNameChange = (event) => {
     setStudentName(event.target.value);
+    const student = allStudents.find(
+      (student) => `${student.firstname} ${student.lastname}` === event.target.value
+    );
+    if (student) {
+      setStudentUsername(student.username);
+    } else {
+      setStudentUsername(""); 
+    }
   };
 
   const handleDashboardOnclick = () => {
@@ -57,10 +84,14 @@ const AddStudent = () => {
       return;
     }
   
+    if (!studentuserId) {
+      setErrorMessage("Retrieving student ID. Please wait.");
+      return;
+    }
+  
     try {
-      const addStudentResponse = await axios.post(
-        "http://localhost:8080/api/students/addstudent",
-        { userid: userId, classesid: classid }
+      const addStudentResponse = await axios.put(
+        `http://localhost:8080/api/students/addclasstostudent?userid=${studentuserId}&classid=${classid}`
       );
       console.log("Student added:", addStudentResponse.data);
       navigate(`/teacherclassfiles/${classid}/${username}`);
@@ -68,7 +99,8 @@ const AddStudent = () => {
       console.error("Error adding student:", error);
       setErrorMessage("Error adding student. Please try again.");
     }
-  };  
+  };
+  
   
   const handleCloseError = () => {
     setErrorMessage("");
