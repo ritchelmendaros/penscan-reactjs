@@ -10,6 +10,7 @@ const AddStudent = () => {
   const [userId, setUserId] = useState(null);
   const [studentName, setStudentName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [allStudents, setAllStudents] = useState([]);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -18,13 +19,24 @@ const AddStudent = () => {
           `http://localhost:8080/api/users/getuserid?username=${username}`
         );
         setUserId(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching user ID:", error);
       }
     };
 
+    const fetchAllStudents = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/users/getallstudents"
+        );
+        setAllStudents(response.data);
+      } catch (error) {
+        console.error("Error fetching all students:", error);
+      }
+    };
+
     fetchUserId();
+    fetchAllStudents();
   }, [username]);
 
   const handleStudentNameChange = (event) => {
@@ -79,8 +91,14 @@ const AddStudent = () => {
           className="class-name-input"
           placeholder="Enter Student Name"
           value={studentName}
-          onChange={handleStudentNameChange} 
+          onChange={handleStudentNameChange}
+          list="students" 
         />
+        <datalist id="students">
+          {allStudents.map((student) => (
+            <option key={student.userid} value={`${student.firstname} ${student.lastname}`} />
+          ))}
+        </datalist>
         <button className="addstudent-button" onClick={handleAddStudent}>
           ADD
         </button>
