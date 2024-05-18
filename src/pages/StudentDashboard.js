@@ -16,7 +16,6 @@ const StudentDashboard = () => {
           `http://localhost:8080/api/users/getuserid?username=${username}`
         );
         setUserId(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching user ID:", error);
       }
@@ -26,20 +25,25 @@ const StudentDashboard = () => {
   }, [username]);
 
   useEffect(() => {
-    const fetchUserClasses = async () => {
+    const fetchUserClassIds = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/classes/getclassesbyteacherid?teacherid=${userId}`
+          `http://localhost:8080/api/students/getclassidsbyuserid?userid=${userId}`
         );
-        setUserClasses(response.data);
-        console.log("User Classes:", response.data);
+        const classIds = response.data;
+        if (classIds.length > 0) {
+          const response = await axios.get(
+            `http://localhost:8080/api/classes/getclassdetails?classids=${classIds.join(",")}`
+          );
+          setUserClasses(response.data);
+        }
       } catch (error) {
         console.error("Error fetching user classes:", error);
       }
     };
 
     if (userId) {
-      fetchUserClasses();
+      fetchUserClassIds();
     }
   }, [userId]);
 
@@ -69,10 +73,7 @@ const StudentDashboard = () => {
       </div>
       <div className="class-names-container">
         {userClasses.map((classData, index) => (
-          <div
-            className="class-name"
-            key={index}
-          >
+          <div className="class-name" key={index}>
             <div className="class-square">{classData.classname}</div>
           </div>
         ))}
