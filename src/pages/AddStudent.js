@@ -48,6 +48,15 @@ const AddStudent = () => {
   }
 
   const handleAddStudent = async () => {
+    const studentExists = allStudents.some(
+      (student) => `${student.firstname} ${student.lastname}` === studentName
+    );
+  
+    if (!studentExists) {
+      setErrorMessage("Student record not found. Please enter a valid student name.");
+      return;
+    }
+  
     try {
       const addStudentResponse = await axios.post(
         "http://localhost:8080/api/students/addstudent",
@@ -59,7 +68,7 @@ const AddStudent = () => {
       console.error("Error adding student:", error);
       setErrorMessage("Error adding student. Please try again.");
     }
-  };
+  };  
   
   const handleCloseError = () => {
     setErrorMessage("");
