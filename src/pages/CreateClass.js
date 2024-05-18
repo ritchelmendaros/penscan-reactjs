@@ -32,14 +32,19 @@ const CreateClass = () => {
 
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
-  }
+  };
 
   const handleCreateClass = async () => {
+    if (!classname) {
+      setErrorMessage("Class name cannot be empty.");
+      return;
+    }
+
     try {
       const response = await axios.get(
         `http://localhost:8080/api/classes/checkclass?classname=${classname}&teacherid=${userId}`
       );
-  
+
       if (response.data) {
         setErrorMessage("Class name already exists.");
       } else {
@@ -54,7 +59,7 @@ const CreateClass = () => {
       console.error("Error creating class:", error);
     }
   };
-  
+
   const handleCloseError = () => {
     setErrorMessage("");
   };
@@ -63,7 +68,7 @@ const CreateClass = () => {
     <>
       <div className="createclass-dashboard-container">
         <div className="logo-container">
-          <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" onClick={handleDashboardOnclick}/>
+          <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" onClick={handleDashboardOnclick} />
           <p className="dashboard-text" onClick={handleDashboardOnclick}>Dashboard</p>
         </div>
         <div className="action-container">
@@ -85,7 +90,7 @@ const CreateClass = () => {
           className="class-name-input"
           placeholder="Enter Class Name"
           value={classname}
-          onChange={handleClassnameChange} 
+          onChange={handleClassnameChange}
         />
         <button className="create-class-button" onClick={handleCreateClass}>
           CREATE
