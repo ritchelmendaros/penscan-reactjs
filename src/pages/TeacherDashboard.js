@@ -80,12 +80,9 @@ const TeacherDashboard = () => {
       </div>
       <div className="classes-container">
         <p className="classes-text">Classes</p>
-        <img
-          src="/images/AddIcon.png"
-          alt="Plus Icon"
-          className="plus-icon"
-          onClick={handleAddClassClick}
-        />
+        <button className="create-class-button" onClick={handleAddClassClick}>
+          Create Class
+        </button>
       </div>
       <div className="class-names-container">
         {userClasses.map((classData, index) => (

@@ -78,12 +78,9 @@ const TeacherClassFiles = () => {
       </div>
       <div className="classes-container">
         <p className="classes-text">Class Files</p>
-        <img
-          src="/images/AddIcon.png"
-          alt="Plus Icon"
-          className="plus-icon"
-          onClick={handleAddStudentClick}
-        />
+        <button className="create-class-button" onClick={handleAddStudentClick}>
+          Add Student
+        </button>
       </div>
       {/* <div className="class-names-container">
         {userClasses.map((classData, index) => (
