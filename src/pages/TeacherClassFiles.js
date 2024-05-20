@@ -9,6 +9,7 @@ const TeacherClassFiles = () => {
   const { classid } = useParams();
   const [userId, setUserId] = useState(null);
   const [userClasses, setUserClasses] = useState([]);
+  const [activeTab, setActiveTab] = useState("Class Files");
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -44,12 +45,20 @@ const TeacherClassFiles = () => {
     }
   }, [userId]);
 
-  const handleAddStudentClick = () => {
-    navigate(`/addstudent/${classid}/${username}`);
+  const handleAddClick = () => {
+    if (activeTab === "Class Files") {
+      alert("Add Files Clicked");
+    } else if (activeTab === "Students") {
+      navigate(`/addstudent/${classid}/${username}`);
+    }
   };
 
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
+  };
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
   };
 
   return (
@@ -77,9 +86,33 @@ const TeacherClassFiles = () => {
         </div>
       </div>
       <div className="classes-container">
-        <p className="classes-text">Class Files</p>
-        <button className="create-class-button" onClick={handleAddStudentClick}>
-          Add Student
+        <p className="classes-text-container">
+          <button className="create-class-button"
+            style={{
+              backgroundColor: activeTab === "Class Files" ? "#002C66" : "lightgray",
+              color: activeTab === "Class Files" ? "white" : "black",
+              borderRadius:0
+            }}
+            onClick={() => handleTabClick("Class Files")}
+          >
+            Class Files
+          </button>
+          <button className="create-class-button"
+            style={{
+              backgroundColor: activeTab === "Students" ? "#002C66" : "lightgray",
+              color: activeTab === "Students" ? "white" : "black",
+              borderRadius:0
+            }}
+            onClick={() => handleTabClick("Students")}
+          >
+            Students
+          </button>
+        </p>
+        <button
+          className="create-class-button"
+          onClick={handleAddClick}
+        >
+          {activeTab === "Class Files" ? "Add Files" : "Add Student"}
         </button>
       </div>
       {/* <div className="class-names-container">
