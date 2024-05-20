@@ -10,6 +10,7 @@ const TeacherClassFiles = () => {
   const [userId, setUserId] = useState(null);
   const [userClasses, setUserClasses] = useState([]);
   const [activeTab, setActiveTab] = useState("Class Files");
+  const [students, setStudents] = useState([]);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -44,6 +45,24 @@ const TeacherClassFiles = () => {
       fetchUserClasses();
     }
   }, [userId]);
+
+  useEffect(() => {
+    if (activeTab === "Students") {
+      const fetchStudents = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/api/users/getallstudents`
+          );
+          setStudents(response.data);
+          console.log("Students:", response.data);
+        } catch (error) {
+          console.error("Error fetching students:", error);
+        }
+      };
+
+      fetchStudents();
+    }
+  }, [activeTab]);
 
   const handleAddClick = () => {
     if (activeTab === "Class Files") {
