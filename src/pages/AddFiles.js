@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "../css/TeacherClassFiles.css";
+import "../css/AddFiles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-const TeacherClassFiles = () => {
+const AddFiles = () => {
   const navigate = useNavigate();
   const { username } = useParams();
   const { classid } = useParams();
@@ -66,7 +66,7 @@ const TeacherClassFiles = () => {
 
   const handleAddClick = () => {
     if (activeTab === "Class Files") {
-      navigate(`/addfiles`);
+      alert("Add Files Clicked");
     } else if (activeTab === "Students") {
       navigate(`/addstudent/${classid}/${username}`);
     }
@@ -146,4 +146,4 @@ const TeacherClassFiles = () => {
   );
 };
 
-export default TeacherClassFiles;
+export default AddFiles;
