@@ -79,7 +79,7 @@ const TeacherDashboard = () => {
         </div>
       </div>
       <div className="classes-container">
-        <p className="classes-text">Classes</p>
+        <p className="classes-text" style={{backgroundColor: "transparent", marginLeft: -15}}>Classes</p>
         <button className="create-class-button" onClick={handleAddClassClick}>
           Create Class
         </button>

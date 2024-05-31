@@ -8,6 +8,7 @@ import StudentDashboard from './pages/StudentDashboard';
 import CreateClass from './pages/CreateClass';
 import TeacherClassFiles from './pages/TeacherClassFiles';
 import AddStudent from './pages/AddStudent';
+import AddFiles from './pages/AddFiles';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/createclass/:username" element={<CreateClass />} />
         <Route path="/teacherclassfiles/:classid/:username" element={<TeacherClassFiles />} />
         <Route path="/addstudent/:classid/:username" element={<AddStudent />} />
+        <Route path="/addfiles" element={<AddFiles />} />
       </Routes>
     </BrowserRouter>
   );
