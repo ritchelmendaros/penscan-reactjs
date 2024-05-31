@@ -1,48 +1,74 @@
 .classes-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 30px;
-    padding-left: 80px;
-    padding-right: 30px;
-  }
-  
-  .classes-text-container {
-    display: flex;
-    gap: 10px; /* Adjust the gap to make buttons closer */
-  }
-  
-  .classes-text {
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
-    color: #002C66;
-    background-color: gray;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .classes-text.active-tab {
-    background-color: #002C66;
-    color: white;
-  }
-  
-  .create-class-button {
-    background-color: #002C66;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .create-class-button:hover {
-    background-color: #004080;
-  }
-  
-  .hidden-button {
-    display: none;
-  }
-  
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 30px;
+  padding-left: 80px;
+  padding-right: 30px;
+}
+
+.classes-text-container {
+  display: flex;
+  gap: 10px; 
+}
+
+.classes-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  color: #002C66;
+  background-color: gray;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.classes-text.active-tab {
+  background-color: #002C66;
+  color: white;
+}
+
+.create-class-button {
+  background-color: #002C66;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-class-button:hover {
+  background-color: #004080;
+}
+
+.hidden-button {
+  display: none;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  width: 100%;
+}
+
+.upload-button {
+  background-color: #002C66;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center; 
+}
+
+.upload-button:hover {
+  background-color: #004080;
+}
+
+.upload-icon {
+  margin-right: 5px;
+}

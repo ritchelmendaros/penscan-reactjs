@@ -105,13 +105,14 @@ const AddFiles = () => {
         </div>
       </div>
       <div className="classes-container">
-        <p className="classes-text-container">
+        <div className="classes-text-container">
           <button
             className="create-class-button"
             style={{
-              backgroundColor: activeTab === "Class Files" ? "#002C66" : "lightgray",
+              backgroundColor:
+                activeTab === "Class Files" ? "#002C66" : "lightgray",
               color: activeTab === "Class Files" ? "white" : "black",
-              borderRadius: 0
+              borderRadius: 0,
             }}
             onClick={() => handleTabClick("Class Files")}
           >
@@ -120,28 +121,27 @@ const AddFiles = () => {
           <button
             className="create-class-button"
             style={{
-              backgroundColor: activeTab === "Students" ? "#002C66" : "lightgray",
+              backgroundColor:
+                activeTab === "Students" ? "#002C66" : "lightgray",
               color: activeTab === "Students" ? "white" : "black",
-              borderRadius: 0
+              borderRadius: 0,
             }}
             onClick={() => handleTabClick("Students")}
           >
             Students
           </button>
-        </p>
-        <button className="create-class-button" onClick={handleAddClick}>
-          {activeTab === "Class Files" ? "Add Files" : "Add Student"}
+        </div>
+        {activeTab === "Students" && (
+          <button className="create-class-button" onClick={handleAddClick}>
+            Add Student
+          </button>
+        )}
+      </div>
+      <div className="center-container">
+        <button className="upload-button" onClick={() => {}}>
+          UPLOAD
         </button>
       </div>
-      {activeTab === "Class Files" && (
-        <div className="class-names-container">
-          {userClasses.map((classData, index) => (
-            <div className="class-name" key={index}>
-              <div className="class-square">{classData.classname}</div>
-            </div>
-          ))}
-        </div>
-      )}
     </>
   );
 };
