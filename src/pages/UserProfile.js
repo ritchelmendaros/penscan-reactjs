@@ -6,17 +6,29 @@ import axios from "axios";
 const UserProfile = () => {
   const navigate = useNavigate();
   const { username } = useParams();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
-  //   const handleAddClassClick = () => {
-  //     navigate(`/createclass/${username}`);
-  //   };
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/users/getuserdetails?username=${username}`);
+        const user = response.data;
+        if (user) {
+          setFirstName(user.firstname);
+          setLastName(user.lastname);
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [username]);
 
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
   };
-  //   const handleClassClick = (classId) => {
-  //     navigate(`/teacherclassfiles/${classId}/${username}`);
-  //   };
 
   return (
     <>
@@ -31,6 +43,19 @@ const UserProfile = () => {
           <p className="dashboard-text" onClick={handleDashboardOnclick}>
             Dashboard
           </p>
+        </div>
+      </div>
+      <div className="profile-container">
+        <img
+          src="/images/UserIcon.png"
+          alt="Profile"
+          className="profile-image"
+        />
+        <div className="text-box-container">
+          <p>Firstname</p>
+          <input type="text" className="text-box" value={firstName} readOnly />
+          <p>Lastname</p>
+          <input type="text" className="text-box" value={lastName} readOnly />
         </div>
       </div>
     </>

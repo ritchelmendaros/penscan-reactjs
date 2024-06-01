@@ -1,52 +1,60 @@
-.classes-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 30px;
-    padding-left: 80px;
-    padding-right: 30px;
-  }
+.teacher-dashboard-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
 
-  .classes-text-container {
-    display: flex;
-    gap: 10px;
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
-    color: #002C66;
-  }
+.logo-container {
+  display: flex;
+  align-items: center;
+}
 
-  .classes-text {
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
-    color: #002C66;
-    background-color: gray;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.logo {
+  height: 50px;
+  cursor: pointer;
+}
 
-  .classes-text.active-tab {
-    background-color: #002C66;
-    color: white;
-  }
+.dashboard-text {
+  margin-left: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
 
-  .create-class-button {
-    background-color: #002C66;
-    color: white;
-    border: none;
-    margin-right: 10px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.profile-container {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
 
-  .create-class-button:hover {
-    background-color: #004080;
-  }
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
 
-  .hidden-button {
-    display: none;
-  }
+.text-box-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  color: #002c66;
+}
 
-
+.text-box {
+  width: 250px;
+  padding: 15px;
+  border-radius: 5px;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  border: none;
+  background-color: #d9d9d9;
+  letter-spacing: 1px;
+  color: #002c66;
+  text-align: center;
+}
