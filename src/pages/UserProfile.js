@@ -8,6 +8,7 @@ const UserProfile = () => {
   const { username } = useParams();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [showPopup, setShowPopup] = useState(false); // State for controlling pop-up visibility
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -28,6 +29,24 @@ const UserProfile = () => {
 
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
+  };
+
+  const handleEditClick = async () => {
+    try {
+      const response = await axios.put(`http://localhost:8080/api/users/updateuserdetails`, {
+        username,
+        firstname: firstName,
+        lastname: lastName,
+      });
+      console.log("User details updated", response);
+      setShowPopup(true); 
+    } catch (error) {
+      console.error("Error updating user details", error);
+    }
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false); 
   };
 
   return (
@@ -53,11 +72,34 @@ const UserProfile = () => {
         />
         <div className="text-box-container">
           <p>Firstname</p>
-          <input type="text" className="text-box" value={firstName} readOnly />
+          <input
+            type="text"
+            className="text-box"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
           <p>Lastname</p>
-          <input type="text" className="text-box" value={lastName} readOnly />
+          <input
+            type="text"
+            className="text-box"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
         </div>
+        <button className="edit-button" onClick={handleEditClick}>
+          Edit
+        </button>
       </div>
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <p className="popup-message">User details updated successfully!</p>
+            <button className="popup-button" onClick={handleClosePopup}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
