@@ -9,6 +9,7 @@ const AddFiles = () => {
   const [userId, setUserId] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [studentDetails, setStudentDetails] = useState([]);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -25,6 +26,21 @@ const AddFiles = () => {
 
     fetchUserId();
   }, [username]);
+
+  useEffect(() => {
+    const fetchStudentDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/students/getstudentsbyclassid?classid=${classid}`
+        );
+        setStudentDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching student details:", error);
+      }
+    };
+
+    fetchStudentDetails();
+  }, [classid]);
 
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
@@ -117,6 +133,13 @@ const AddFiles = () => {
           />
         </div>
       </div>
+
+      {studentDetails.map((student, index) => (
+        <div key={index} className="student-item">
+          <span className="expand-icon">></span>
+          <p className="student-name">{student.firstname} {student.lastname}</p>
+        </div>
+      ))}
 
       {showModal && (
         <div className="modal">

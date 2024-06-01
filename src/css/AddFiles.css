@@ -4,11 +4,13 @@
   display: flex;
   gap: 10px;
   margin-left: auto;
+  margin-bottom: 50px;
 }
 
 .classes-text-container {
   display: flex;
-  gap: 1230px;
+  margin-left: 10px;
+  gap: 1220px;
 }
 
 .classes-text {
@@ -144,4 +146,34 @@
 
 .remove-button:hover {
   color: darkred;
+}
+
+.student-item {
+  display: flex;
+  align-items: center;
+  margin-left: 90px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.expand-icon {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.student-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  color: #002C66;
+  margin: 0;
+  cursor: pointer;
+}
+
+.student-name:hover {
+  text-decoration: underline;
+}
+
+.expand-icon {
+  font-weight: bold;
+  font-size: 20px;
 }
