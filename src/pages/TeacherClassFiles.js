@@ -5,12 +5,10 @@ import axios from "axios";
 
 const TeacherClassFiles = () => {
   const navigate = useNavigate();
-  const { username } = useParams();
-  const { classid } = useParams();
+  const { username, classid } = useParams();
   const [userId, setUserId] = useState(null);
-  const [userClasses, setUserClasses] = useState([]);
+  const [quizzes, setQuizzes] = useState([]);
   const [activeTab, setActiveTab] = useState("Class Files");
-  const [students, setStudents] = useState([]);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -19,7 +17,6 @@ const TeacherClassFiles = () => {
           `http://localhost:8080/api/users/getuserid?username=${username}`
         );
         setUserId(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching user ID:", error);
       }
@@ -29,40 +26,21 @@ const TeacherClassFiles = () => {
   }, [username]);
 
   useEffect(() => {
-    const fetchUserClasses = async () => {
+    const fetchQuizzes = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/classes/getclassesbyteacherid?teacherid=${userId}`
+          `http://localhost:8080/api/quiz/getquizbyteacherid?teacherid=${userId}&classid=${classid}`
         );
-        setUserClasses(response.data);
-        console.log("User Classes:", response.data);
+        setQuizzes(response.data);
       } catch (error) {
-        console.error("Error fetching user classes:", error);
+        console.error("Error fetching quizzes:", error);
       }
     };
 
-    if (userId) {
-      fetchUserClasses();
+    if (userId && classid) {
+      fetchQuizzes();
     }
-  }, [userId]);
-
-  useEffect(() => {
-    if (activeTab === "Students") {
-      const fetchStudents = async () => {
-        try {
-          const response = await axios.get(
-            `http://localhost:8080/api/users/getallstudents`
-          );
-          setStudents(response.data);
-          console.log("Students:", response.data);
-        } catch (error) {
-          console.error("Error fetching students:", error);
-        }
-      };
-
-      fetchStudents();
-    }
-  }, [activeTab]);
+  }, [userId, classid]);
 
   const handleAddClick = () => {
     if (activeTab === "Class Files") {
@@ -109,9 +87,10 @@ const TeacherClassFiles = () => {
           <button
             className="create-class-button"
             style={{
-              backgroundColor: activeTab === "Class Files" ? "#002C66" : "lightgray",
+              backgroundColor:
+                activeTab === "Class Files" ? "#002C66" : "lightgray",
               color: activeTab === "Class Files" ? "white" : "black",
-              borderRadius: 0
+              borderRadius: 0,
             }}
             onClick={() => handleTabClick("Class Files")}
           >
@@ -120,9 +99,10 @@ const TeacherClassFiles = () => {
           <button
             className="create-class-button"
             style={{
-              backgroundColor: activeTab === "Students" ? "#002C66" : "lightgray",
+              backgroundColor:
+                activeTab === "Students" ? "#002C66" : "lightgray",
               color: activeTab === "Students" ? "white" : "black",
-              borderRadius: 0
+              borderRadius: 0,
             }}
             onClick={() => handleTabClick("Students")}
           >
@@ -135,9 +115,9 @@ const TeacherClassFiles = () => {
       </div>
       {activeTab === "Class Files" && (
         <div className="class-names-container">
-          {userClasses.map((classData, index) => (
+          {quizzes.map((quiz, index) => (
             <div className="class-name" key={index}>
-              <div className="class-square">{classData.classname}</div>
+              <div className="class-square">{quiz.quizname}</div>
             </div>
           ))}
         </div>

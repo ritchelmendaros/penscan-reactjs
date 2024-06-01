@@ -9,7 +9,7 @@
 
 .classes-text-container {
   display: flex;
-  gap: 10px; /* Adjust the gap to make buttons closer */
+  gap: 10px;
 }
 
 .classes-text {
@@ -44,4 +44,5 @@
 .hidden-button {
   display: none;
 }
+
 
