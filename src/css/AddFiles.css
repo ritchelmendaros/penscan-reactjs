@@ -2,16 +2,13 @@
 
 .classes-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 30px;
-  padding-left: 80px;
-  padding-right: 30px;
+  gap: 10px;
+  margin-left: auto;
 }
 
 .classes-text-container {
   display: flex;
-  gap: 10px;
+  gap: 1230px;
 }
 
 .classes-text {
@@ -62,6 +59,7 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .upload-button:hover {

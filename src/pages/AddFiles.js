@@ -7,10 +7,8 @@ const AddFiles = () => {
   const navigate = useNavigate();
   const { username, classid } = useParams();
   const [userId, setUserId] = useState(null);
-  const [activeTab, setActiveTab] = useState("Class Files");
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [studentQuiz, setStudentQuiz] = useState(null); // State to hold student quiz data
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -28,20 +26,8 @@ const AddFiles = () => {
     fetchUserId();
   }, [username]);
 
-  const handleAddClick = () => {
-    if (activeTab === "Class Files") {
-      alert("Add Files Clicked");
-    } else if (activeTab === "Students") {
-      navigate(`/addstudent/${classid}/${username}`);
-    }
-  };
-
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
-  };
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
   };
 
   const handleUploadClick = () => {
@@ -74,13 +60,6 @@ const AddFiles = () => {
           }
         );
         console.log("File uploaded successfully:", response.data);
-        // Extract the student quiz ID from the response
-        const studentQuizId = response.data.split("ID: ")[1];
-        // Fetch the uploaded data using the extracted ID
-        const { data: studentQuizData } = await axios.get(
-          `http://localhost:8080/api/studentquiz/get?id=${studentQuizId}` // Modified to use query parameter
-        );
-        setStudentQuiz(studentQuizData);
         setShowModal(false);
       } catch (error) {
         console.error("Error uploading file:", error);
@@ -124,49 +103,19 @@ const AddFiles = () => {
       </div>
       <div className="classes-container">
         <div className="classes-text-container">
-          <button
-            className="create-class-button"
-            style={{
-              backgroundColor:
-                activeTab === "Class Files" ? "#002C66" : "lightgray",
-              color: activeTab === "Class Files" ? "white" : "black",
-              borderRadius: 0,
-            }}
-            onClick={() => handleTabClick("Class Files")}
-          >
             Class Files
+          <button className="upload-button" onClick={handleUploadClick}>
+            UPLOAD
           </button>
-          <button
-            className="create-class-button"
-            style={{
-              backgroundColor:
-                activeTab === "Students" ? "#002C66" : "lightgray",
-              color: activeTab === "Students" ? "white" : "black",
-              borderRadius: 0,
-            }}
-            onClick={() => handleTabClick("Students")}
-          >
-            Students
-          </button>
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+            multiple
+            accept="image/*"
+          />
         </div>
-        {activeTab === "Students" && (
-          <button className="create-class-button" onClick={handleAddClick}>
-            Add Student
-          </button>
-        )}
-      </div>
-      <div className="center-container">
-        <button className="upload-button" onClick={handleUploadClick}>
-          UPLOAD
-        </button>
-        <input
-          type="file"
-          ref={fileInputRef}
-          style={{ display: "none" }}
-          onChange={handleFileChange}
-          multiple
-          accept="image/*"
-        />
       </div>
 
       {showModal && (
@@ -199,23 +148,6 @@ const AddFiles = () => {
           </div>
         </div>
       )}
-
-      {/* Display the image and recognized text */}
-      <div className="student-quiz-details">
-        <h2>Student Quiz Details</h2>
-        {studentQuiz && (
-          <div>
-            <img
-              src={`data:image/jpeg;base64,${studentQuiz.base64Image}`}
-              alt="Quiz Image"
-            />
-          </div>
-        )}
-        <div>
-          <h3>Recognized Text:</h3>
-          <p>{studentQuiz?.recognizedtext}</p>
-        </div>
-      </div>
     </>
   );
 };
