@@ -10,10 +10,7 @@ const AddQuiz = () => {
   const [userId, setUserId] = useState(null);
   const [quizName, setQuizName] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState("");
-  const [studentUsername, setStudentUsername] = useState("");
-  const [studentuserId, setStudentUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [allStudents, setAllStudents] = useState([]);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -27,37 +24,8 @@ const AddQuiz = () => {
       }
     };
 
-    const fetchAllStudents = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/api/users/getallstudents"
-        );
-        setAllStudents(response.data);
-      } catch (error) {
-        console.error("Error fetching all students:", error);
-      }
-    };
-
     fetchUserId();
-    fetchAllStudents();
   }, [username]);
-
-  useEffect(() => {
-    if (studentUsername) {
-      fetchStudentIdByUsername(studentUsername);
-    }
-  }, [studentUsername]);
-
-  const fetchStudentIdByUsername = async (username) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/users/getuserid?username=${username}`
-      );
-      setStudentUserId(response.data);
-    } catch (error) {
-      console.error("Error fetching user ID:", error);
-    }
-  };
 
   const handleQuizNameChange = (event) => {
     setQuizName(event.target.value);
@@ -72,9 +40,21 @@ const AddQuiz = () => {
   };
 
   const handleAddQuiz = async () => {
-    // Add your logic to handle quiz creation here
-    // Include the quizName, correctAnswer, and any other necessary data
-    // You can use the axios library to make requests to your backend API
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/quiz/addquiz",
+        {
+          classid: classid,
+          quizname: quizName,
+          quizanswerkey: correctAnswer
+        }
+      );
+      console.log("Quiz added:", response.data);
+      navigate(`/teacherclassfiles/${classid}/${username}`);
+    } catch (error) {
+      console.error("Error adding quiz:", error);
+      setErrorMessage("Error adding quiz. Please try again.");
+    }
   };
 
   const handleCloseError = () => {
@@ -117,20 +97,11 @@ const AddQuiz = () => {
           onChange={handleQuizNameChange}
         />
         <textarea
-  className="addstudent-input-big" // Changed to textarea
-  placeholder="Enter Correct Answer"
-  value={correctAnswer}
-  onChange={handleCorrectAnswerChange}
-/>
-
-        <datalist id="students">
-          {allStudents.map((student) => (
-            <option
-              key={student.userid}
-              value={`${student.firstname} ${student.lastname}`}
-            />
-          ))}
-        </datalist>
+          className="addstudent-input-big"
+          placeholder="Enter Correct Answer"
+          value={correctAnswer}
+          onChange={handleCorrectAnswerChange}
+        />
         <button className="addstudent-button" onClick={handleAddQuiz}>
           ADD
         </button>
