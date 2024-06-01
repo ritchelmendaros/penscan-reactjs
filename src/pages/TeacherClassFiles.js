@@ -8,7 +8,6 @@ const TeacherClassFiles = () => {
   const { username, classid } = useParams();
   const [userId, setUserId] = useState(null);
   const [quizzes, setQuizzes] = useState([]);
-  const [activeTab, setActiveTab] = useState("Class Files");
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -42,20 +41,16 @@ const TeacherClassFiles = () => {
     }
   }, [userId, classid]);
 
-  const handleAddClick = () => {
-    if (activeTab === "Class Files") {
-      navigate(`/addquiz/${classid}/${username}`);
-    } else if (activeTab === "Students") {
-      navigate(`/addstudent/${classid}/${username}`);
-    }
+  const handleAddQuizClick = () => {
+    navigate(`/addquiz/${classid}/${username}`);
+  };
+
+  const handleAddStudentClick = () => {
+    navigate(`/addstudent/${classid}/${username}`);
   };
 
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
-  };
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
   };
 
   const handleQuizClick = (quiz) => {
@@ -88,49 +83,29 @@ const TeacherClassFiles = () => {
       </div>
       <div className="classes-container">
         <p className="classes-text-container">
-          <button
-            className="create-class-button"
-            style={{
-              backgroundColor:
-                activeTab === "Class Files" ? "#002C66" : "lightgray",
-              color: activeTab === "Class Files" ? "white" : "black",
-              borderRadius: 0,
-            }}
-            onClick={() => handleTabClick("Class Files")}
-          >
             Class Files
-          </button>
-          <button
-            className="create-class-button"
-            style={{
-              backgroundColor:
-                activeTab === "Students" ? "#002C66" : "lightgray",
-              color: activeTab === "Students" ? "white" : "black",
-              borderRadius: 0,
-            }}
-            onClick={() => handleTabClick("Students")}
-          >
-            Students
-          </button>
         </p>
-        <button className="create-class-button" onClick={handleAddClick}>
-          {activeTab === "Class Files" ? "Add Quiz" : "Add Student"}
-        </button>
-      </div>
-      {activeTab === "Class Files" && (
-        <div className="class-names-container">
-          {quizzes.map((quiz, index) => (
-            <div className="class-name" key={index}>
-              <div
-                className="class-square"
-                onClick={() => handleQuizClick(quiz)}
-              >
-                {quiz.quizname}
-              </div>
-            </div>
-          ))}
+        <div className="buttons-container">
+          <button className="create-class-button" onClick={handleAddQuizClick}>
+            Add Quiz
+          </button>
+          <button className="create-class-button" onClick={handleAddStudentClick}>
+            Add Student
+          </button>
         </div>
-      )}
+      </div>
+      <div className="class-names-container">
+        {quizzes.map((quiz, index) => (
+          <div className="class-name" key={index}>
+            <div
+              className="class-square"
+              onClick={() => handleQuizClick(quiz)}
+            >
+              {quiz.quizname}
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
