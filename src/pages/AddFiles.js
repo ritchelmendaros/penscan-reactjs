@@ -91,6 +91,8 @@ const AddFiles = () => {
     const files = Array.from(event.target.files);
     setSelectedFiles(files);
     setShowModal(true);
+    // Clear the input value to allow re-selecting the same file
+    fileInputRef.current.value = "";
   };
 
   const handleSubmit = () => {
