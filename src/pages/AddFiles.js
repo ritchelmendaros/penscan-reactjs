@@ -11,6 +11,8 @@ const AddFiles = () => {
   const [userClasses, setUserClasses] = useState([]);
   const [activeTab, setActiveTab] = useState("Class Files");
   const [students, setStudents] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -86,9 +88,19 @@ const AddFiles = () => {
   };
 
   const handleFileChange = (event) => {
-    const files = event.target.files;
-    console.log(files);
-    // Handle file upload here
+    const files = Array.from(event.target.files);
+    setSelectedFiles(files);
+    setShowModal(true);
+  };
+
+  const handleSubmit = () => {
+    console.log("Files submitted:", selectedFiles);
+    // Handle file upload logic here
+    setShowModal(false);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -157,8 +169,35 @@ const AddFiles = () => {
           ref={fileInputRef}
           style={{ display: "none" }}
           onChange={handleFileChange}
+          multiple
+          accept="image/*"
         />
       </div>
+
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close-button" onClick={handleCloseModal}>
+              &times;
+            </span>
+            <h3>Selected Images</h3>
+            <div className="image-preview-container">
+              {selectedFiles.map((file, index) => (
+                <div key={index} className="image-preview">
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={`Selected ${index}`}
+                    className="preview-image"
+                  />
+                </div>
+              ))}
+            </div>
+            <button className="submit-button" onClick={handleSubmit}>
+              Submit
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -1,3 +1,5 @@
+/* AddFiles.css */
+
 .classes-container {
   display: flex;
   justify-content: space-between;
@@ -9,7 +11,7 @@
 
 .classes-text-container {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .classes-text {
@@ -54,15 +56,12 @@
 
 .upload-button {
   background-color: #002C66;
-  font-family: 'Inter', sans-serif;
-  font-weight: bold;
   color: white;
+  font-weight: bold;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  display: flex;
-  align-items: center; 
 }
 
 .upload-button:hover {
@@ -71,4 +70,68 @@
 
 .upload-icon {
   margin-right: 5px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  color: #002C66;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.image-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.image-preview {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.submit-button {
+  background-color: #002C66;
+  font-weight: bold;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.submit-button:hover {
+  background-color: #004080;
 }
