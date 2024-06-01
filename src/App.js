@@ -10,6 +10,7 @@ import TeacherClassFiles from './pages/TeacherClassFiles';
 import AddStudent from './pages/AddStudent';
 import AddFiles from './pages/AddFiles';
 import AddQuiz from './pages/AddQuiz';
+import UserProfile from './pages/UserProfile';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} /> 
+        <Route path="/userprofile/:username" element={<UserProfile />} /> 
         <Route path="/teacherdashboard/:username" element={<TeacherDashboard />} />
         <Route path="/studentdashboard/:username" element={<StudentDashboard />} />
         <Route path="/createclass/:username" element={<CreateClass />} />

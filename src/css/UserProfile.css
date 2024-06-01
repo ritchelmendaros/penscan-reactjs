@@ -1,0 +1,52 @@
+.classes-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    padding-left: 80px;
+    padding-right: 30px;
+  }
+
+  .classes-text-container {
+    display: flex;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    color: #002C66;
+  }
+
+  .classes-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    color: #002C66;
+    background-color: gray;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .classes-text.active-tab {
+    background-color: #002C66;
+    color: white;
+  }
+
+  .create-class-button {
+    background-color: #002C66;
+    color: white;
+    border: none;
+    margin-right: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .create-class-button:hover {
+    background-color: #004080;
+  }
+
+  .hidden-button {
+    display: none;
+  }
+
+

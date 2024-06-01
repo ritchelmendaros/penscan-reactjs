@@ -53,6 +53,9 @@ const TeacherDashboard = () => {
   const handleClassClick = (classId) => {
     navigate(`/teacherclassfiles/${classId}/${username}`);
   };
+  const handleUserProfileClick = (classId) => {
+    navigate(`/userprofile/${username}`);
+  };
 
   return (
     <>
@@ -69,7 +72,7 @@ const TeacherDashboard = () => {
           </p>
         </div>
         <div className="action-container">
-          <div className="user-icon-container">
+          <div className="user-icon-container" onClick={handleUserProfileClick}>
             <img
               src="/images/UserIcon.png"
               alt="User Icon"
