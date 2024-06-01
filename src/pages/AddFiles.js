@@ -1,3 +1,5 @@
+// AddFiles.js
+
 import React, { useState, useEffect, useRef } from "react";
 import "../css/AddFiles.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,6 +12,7 @@ const AddFiles = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [studentDetails, setStudentDetails] = useState([]);
+  const [expandedStudent, setExpandedStudent] = useState(null); // State to track expanded student
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -93,6 +96,11 @@ const AddFiles = () => {
     );
   };
 
+  const toggleExpand = (index) => {
+    // Toggle the expanded student
+    setExpandedStudent((prevIndex) => (prevIndex === index ? null : index));
+  };
+
   return (
     <>
       <div className="teacher-dashboard-container">
@@ -136,8 +144,16 @@ const AddFiles = () => {
 
       {studentDetails.map((student, index) => (
         <div key={index} className="student-item">
-          <span className="expand-icon">></span>
+          <span className="expand-icon" onClick={() => toggleExpand(index)}>
+            {expandedStudent === index ? "-" : ">"}
+          </span>
           <p className="student-name">{student.firstname} {student.lastname}</p>
+          {expandedStudent === index && (
+            <div className="additional-content">
+              {/* Additional content to be shown when expanded */}
+              {/* Example: <p>Additional Information</p> */}
+            </div>
+          )}
         </div>
       ))}
 
