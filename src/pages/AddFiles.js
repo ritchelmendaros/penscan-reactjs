@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../css/AddFiles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -11,6 +11,7 @@ const AddFiles = () => {
   const [userClasses, setUserClasses] = useState([]);
   const [activeTab, setActiveTab] = useState("Class Files");
   const [students, setStudents] = useState([]);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -80,6 +81,16 @@ const AddFiles = () => {
     setActiveTab(tab);
   };
 
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    console.log(files);
+    // Handle file upload here
+  };
+
   return (
     <>
       <div className="teacher-dashboard-container">
@@ -138,9 +149,15 @@ const AddFiles = () => {
         )}
       </div>
       <div className="center-container">
-        <button className="upload-button" onClick={() => {}}>
+        <button className="upload-button" onClick={handleUploadClick}>
           UPLOAD
         </button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
       </div>
     </>
   );
