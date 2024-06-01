@@ -46,6 +46,7 @@ const AddQuiz = () => {
         {
           classid: classid,
           quizname: quizName,
+          teacherid: userId,
           quizanswerkey: correctAnswer
         }
       );
