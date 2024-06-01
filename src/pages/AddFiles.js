@@ -97,12 +97,17 @@ const AddFiles = () => {
 
   const handleSubmit = () => {
     console.log("Files submitted:", selectedFiles);
-    // Handle file upload logic here
     setShowModal(false);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleRemoveImage = (indexToRemove) => {
+    setSelectedFiles(
+      selectedFiles.filter((file, index) => index !== indexToRemove)
+    );
   };
 
   return (
@@ -191,6 +196,12 @@ const AddFiles = () => {
                     alt={`Selected ${index}`}
                     className="preview-image"
                   />
+                  <button
+                    className="remove-button"
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    X
+                  </button>
                 </div>
               ))}
             </div>

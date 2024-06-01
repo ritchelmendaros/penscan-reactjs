@@ -135,3 +135,15 @@
 .submit-button:hover {
   background-color: #004080;
 }
+
+.remove-button {
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  color: darkred;
+}

@@ -66,7 +66,7 @@ const TeacherClassFiles = () => {
 
   const handleAddClick = () => {
     if (activeTab === "Class Files") {
-      navigate(`/addfiles`);
+      navigate(`/addquiz/${classid}/${username}`);
     } else if (activeTab === "Students") {
       navigate(`/addstudent/${classid}/${username}`);
     }
@@ -130,7 +130,7 @@ const TeacherClassFiles = () => {
           </button>
         </p>
         <button className="create-class-button" onClick={handleAddClick}>
-          {activeTab === "Class Files" ? "Add Files" : "Add Student"}
+          {activeTab === "Class Files" ? "Add Quiz" : "Add Student"}
         </button>
       </div>
       {activeTab === "Class Files" && (
