@@ -5,13 +5,12 @@ import axios from "axios";
 
 const AddFiles = () => {
   const navigate = useNavigate();
-  const { username, classid, teacherid, quizid } = useParams();
+  const { username, classid } = useParams();
   const [userId, setUserId] = useState(null);
-  const [userClasses, setUserClasses] = useState([]);
   const [activeTab, setActiveTab] = useState("Class Files");
-  const [students, setStudents] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [studentQuiz, setStudentQuiz] = useState(null); // State to hold student quiz data
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -21,7 +20,6 @@ const AddFiles = () => {
           `http://localhost:8080/api/users/getuserid?username=${username}`
         );
         setUserId(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching user ID:", error);
       }
@@ -29,42 +27,6 @@ const AddFiles = () => {
 
     fetchUserId();
   }, [username]);
-
-  useEffect(() => {
-    const fetchUserClasses = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/api/classes/getclassesbyteacherid?teacherid=${userId}`
-        );
-        setUserClasses(response.data);
-        console.log("User Classes:", response.data);
-      } catch (error) {
-        console.error("Error fetching user classes:", error);
-      }
-    };
-
-    if (userId) {
-      fetchUserClasses();
-    }
-  }, [userId]);
-
-  useEffect(() => {
-    if (activeTab === "Students") {
-      const fetchStudents = async () => {
-        try {
-          const response = await axios.get(
-            `http://localhost:8080/api/users/getallstudents`
-          );
-          setStudents(response.data);
-          console.log("Students:", response.data);
-        } catch (error) {
-          console.error("Error fetching students:", error);
-        }
-      };
-
-      fetchStudents();
-    }
-  }, [activeTab]);
 
   const handleAddClick = () => {
     if (activeTab === "Class Files") {
@@ -90,13 +52,40 @@ const AddFiles = () => {
     const files = Array.from(event.target.files);
     setSelectedFiles(files);
     setShowModal(true);
-    // Clear the input value to allow re-selecting the same file
     fileInputRef.current.value = "";
   };
 
-  const handleSubmit = () => {
-    console.log("Files submitted:", selectedFiles);
-    setShowModal(false);
+  const handleSubmit = async () => {
+    if (selectedFiles.length > 0) {
+      const formData = new FormData();
+      formData.append("quizid", "your_quiz_id_here");
+      formData.append("studentid", userId);
+      formData.append("score", 100);
+      formData.append("image", selectedFiles[0]);
+
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/studentquiz/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log("File uploaded successfully:", response.data);
+        // Extract the student quiz ID from the response
+        const studentQuizId = response.data.split("ID: ")[1];
+        // Fetch the uploaded data using the extracted ID
+        const { data: studentQuizData } = await axios.get(
+          `http://localhost:8080/api/studentquiz/get?id=${studentQuizId}` // Modified to use query parameter
+        );
+        setStudentQuiz(studentQuizData);
+        setShowModal(false);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
   };
 
   const handleCloseModal = () => {
@@ -210,6 +199,23 @@ const AddFiles = () => {
           </div>
         </div>
       )}
+
+      {/* Display the image and recognized text */}
+      <div className="student-quiz-details">
+        <h2>Student Quiz Details</h2>
+        {studentQuiz && (
+          <div>
+            <img
+              src={`data:image/jpeg;base64,${studentQuiz.base64Image}`}
+              alt="Quiz Image"
+            />
+          </div>
+        )}
+        <div>
+          <h3>Recognized Text:</h3>
+          <p>{studentQuiz?.recognizedtext}</p>
+        </div>
+      </div>
     </>
   );
 };
