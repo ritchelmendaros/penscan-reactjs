@@ -58,6 +58,10 @@ const TeacherClassFiles = () => {
     setActiveTab(tab);
   };
 
+  const handleQuizClick = (quiz) => {
+    navigate(`/addfiles/${classid}/${userId}/${quiz.quizid}`);
+  };
+  
   return (
     <>
       <div className="teacher-dashboard-container">
@@ -117,7 +121,12 @@ const TeacherClassFiles = () => {
         <div className="class-names-container">
           {quizzes.map((quiz, index) => (
             <div className="class-name" key={index}>
-              <div className="class-square">{quiz.quizname}</div>
+              <div
+                className="class-square"
+                onClick={() => handleQuizClick(quiz)}
+              >
+                {quiz.quizname}
+              </div>
             </div>
           ))}
         </div>

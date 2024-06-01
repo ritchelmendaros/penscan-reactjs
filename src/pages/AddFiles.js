@@ -5,8 +5,7 @@ import axios from "axios";
 
 const AddFiles = () => {
   const navigate = useNavigate();
-  const { username } = useParams();
-  const { classid } = useParams();
+  const { username, classid, teacherid, quizid } = useParams();
   const [userId, setUserId] = useState(null);
   const [userClasses, setUserClasses] = useState([]);
   const [activeTab, setActiveTab] = useState("Class Files");
