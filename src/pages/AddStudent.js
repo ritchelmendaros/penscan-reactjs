@@ -115,7 +115,7 @@ const AddStudent = () => {
       <div className="addstudent-dashboard-container">
         <div className="logo-container">
           <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" onClick={handleDashboardOnclick}/>
-          <p className="dashboard-text" onClick={handleDashboardOnclick}>Dashboard</p>
+          <p className="dashboard-text" onClick={handleDashboardOnclick} style={{fontSize: "15px"}}>Dashboard</p>
         </div>
         <div className="action-container">
           <div className="user-icon-container" onClick={handleUserProfileClick}>

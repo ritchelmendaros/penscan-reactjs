@@ -151,7 +151,7 @@ const AddFiles = () => {
       }
     }
   };
-  
+
   const handleUserProfileClick = () => {
     navigate(`/userprofile/${username}`);
   };
@@ -166,7 +166,7 @@ const AddFiles = () => {
             className="logo"
             onClick={handleDashboardOnclick}
           />
-          <p className="dashboard-text" onClick={handleDashboardOnclick}>
+          <p className="dashboard-text" onClick={handleDashboardOnclick} style={{fontSize: "15px"}}>
             Dashboard
           </p>
         </div>
@@ -199,50 +199,49 @@ const AddFiles = () => {
       <div className="student">
         {studentDetails.map((student, index) => (
           <div key={index} className="student-item">
-          <div
-            className="name-toggle-container"
-            onClick={() => toggleExpand(index, student.userid)}
-          >
-            <img
-              src={
-                expandedStudent === index
-                  ? "/images/expand2.png"
-                  : "/images/expand1.png"
-              }
-              alt="Expand"
-              className="expand-icon"
-            />
-            <p className="student-name">
-              {student.firstname} {student.lastname}
-            </p>
-          </div>
-          {expandedStudent === index && student.studentQuiz && (
-            <div className="additional-content">
+            <div
+              className="name-toggle-container"
+              onClick={() => toggleExpand(index, student.userid)}
+            >
               <img
-                src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
-                alt="Student Quiz"
-                className="student-quiz-image"
+                src={
+                  expandedStudent === index
+                    ? "/images/expand2.png"
+                    : "/images/expand1.png"
+                }
+                alt="Expand"
+                className="expand-icon"
               />
-              <div className="recognized-text">
-                <p style={{ fontWeight: "bold" }}>Extracted Text</p>
-                {student.studentQuiz.recognizedtext &&
-                  student.studentQuiz.recognizedtext
-                    .split("\n")
-                    .map((line, i) => <p key={i}>{line}</p>)}
-              </div>
-              <p className="student-score">
-                <p style={{ fontWeight: "bold" }}>Score:</p>{" "}
-                {student.studentQuiz.score}
+              <p className="student-name">
+                {student.firstname} {student.lastname} 
               </p>
             </div>
-          )}
-          {expandedStudent === index && expandErrors[index] && (
-            <div className="additional-content">
-              <div className="error-message">{expandErrors[index]}</div>
-            </div>
-          )}
-        </div>
-        
+            {expandedStudent === index && student.studentQuiz && (
+              <div className="additional-content">
+                <img
+                  src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
+                  alt="Student Quiz"
+                  className="student-quiz-image"
+                />
+                <div className="recognized-text">
+                  <p style={{ fontWeight: "bold" }}>Extracted Text</p>
+                  {student.studentQuiz.recognizedtext &&
+                    student.studentQuiz.recognizedtext
+                      .split("\n")
+                      .map((line, i) => <p key={i}>{line}</p>)}
+                </div>
+                <p className="student-score">
+                  <p style={{ fontWeight: "bold" }}>Score:</p>{" "}
+                  {student.studentQuiz.score}
+                </p>
+              </div>
+            )}
+            {expandedStudent === index && expandErrors[index] && (
+              <div className="additional-content">
+                <div className="error-message">{expandErrors[index]}</div>
+              </div>
+            )}
+          </div>
         ))}
       </div>
       {showModal && (

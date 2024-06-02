@@ -67,7 +67,7 @@ const TeacherDashboard = () => {
             className="logo"
             onClick={handleDashboardOnclick}
           />
-          <p className="dashboard-text" onClick={handleDashboardOnclick}>
+          <p className="dashboard-text" onClick={handleDashboardOnclick} style={{fontSize: "15px"}}>
             Dashboard
           </p>
         </div>
