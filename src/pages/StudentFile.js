@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../css/StudentFile.css";
@@ -122,66 +122,67 @@ const StudentFile = () => {
           Class Files
         </button>
       </div>
-      <div>
+      <div className="quiz-container">
         {quizNames.map((quiz, index) => (
-          <div
-            key={index}
-            onClick={() => toggleExpand(index, quiz.quizId)}
-            className="student-name-container"
-          >
-            <img
-              src={
-                expandedQuiz === index
-                  ? "/images/expand2.png"
-                  : "/images/expand1.png"
-              }
-              alt="Expand"
-              className="quizexpand-icon"
-            />
-            <span className="quiz-name">{quiz.quizName}</span>
+          <div key={index} className="quiz-item">
+            <div
+              className="name-toggle-container"
+              onClick={() => toggleExpand(index, quiz.quizId)}
+            >
+              <img
+                src={
+                  expandedQuiz === index
+                    ? "/images/expand2.png"
+                    : "/images/expand1.png"
+                }
+                alt="Expand"
+                className="quizexpand-icon"
+              />
+              <span className="quiz-name">{quiz.quizName}</span>
+            </div>
+            {expandedQuiz === index && quizDetails[index] && (
+              <div className="studentadditional-content">
+                <p className="student-score">
+                    <span>Score:</span> {quizDetails[index].score}
+                  </p>
+                <img
+                  src={`data:image/jpeg;base64,${quizDetails[index].base64Image}`}
+                  alt="Student Quiz"
+                  className="student-quiz-image"
+                />
+                <div className="score-and-text-container">
+                  <div className="table-container">
+                    <table className="text-answer-table text-table">
+                      <thead>
+                        <tr>
+                          <th>Extracted Text</th>
+                          <th>Answer Key</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="recognized-text">
+                            {quizDetails[index].recognizedtext &&
+                              quizDetails[index].recognizedtext
+                                .split("\n")
+                                .slice(1)
+                                .map((line, i) => <p key={i}>{line}</p>)}
+                          </td>
+                          <td className="recognized-text answer-key">
+                            {answerKey.split("\n").map((line, i) => (
+                              <p key={i}>{line}</p>
+                            ))}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
-      {expandedQuiz !== null && quizDetails[expandedQuiz] && (
-        <div className="additional-content">
-          <p className="student-score" style={{ fontWeight: "bold", marginTop: "20px" }}>
-            <span>Score:</span> {quizDetails[expandedQuiz].score}
-          </p>
-          {quizDetails[expandedQuiz].base64Image && (
-            <img
-              src={`data:image/jpeg;base64,${quizDetails[expandedQuiz].base64Image}`}
-              alt="Student Quiz"
-              className="student-quiz-image"
-            />
-          )}
-          <div className="table-container">
-            <table className="text-answer-table text-table">
-              <thead>
-                <tr>
-                  <th>Extracted Text</th>
-                  <th>Answer Key</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="recognized-text">
-                    {quizDetails[expandedQuiz].recognizedtext &&
-                      quizDetails[expandedQuiz].recognizedtext
-                      .split("\n")
-                      .slice(1)
-                      .map((line, i) => <p key={i}>{line}</p>)}
-                  </td>
-                  <td className="recognized-text answer-key">
-                    {answerKey.split("\n").map((line, i) => (
-                      <p key={i}>{line}</p>
-                    ))}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
     </>
   );
 };
