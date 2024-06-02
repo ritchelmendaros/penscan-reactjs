@@ -44,7 +44,7 @@ const AddFiles = () => {
     };
 
     fetchStudentDetails();
-  }, [classid]);
+  }, [classid, showAnalysis]);
 
   useEffect(() => {
     const fetchAnswerKey = async () => {
@@ -60,6 +60,30 @@ const AddFiles = () => {
 
     fetchAnswerKey();
   }, [quizid]);
+
+  const fetchScoresAndStudentDetails = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/studentquiz/getscoresandstudentids?quizid=${quizid}`
+      );
+      const scoresAndStudentDetails = response.data;
+      const studentDetailsArray = Object.entries(scoresAndStudentDetails).map(
+        ([studentId, details]) => ({
+          studentId,
+          ...details,
+        })
+      );
+      setStudentDetails(studentDetailsArray);
+    } catch (error) {
+      console.error("Error fetching scores and student details:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (showAnalysis) {
+      fetchScoresAndStudentDetails();
+    }
+  }, [showAnalysis, quizid]);
 
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
@@ -225,7 +249,28 @@ const AddFiles = () => {
       </div>
       {showAnalysis ? (
         <div className="analysis-table">
-        </div>
+        <h3>Student Rankings</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {studentDetails
+              .sort((a, b) => b.score - a.score)
+              .map((student, index) => (
+                <tr key={index}>
+                  <td>
+                    {student.firstName} {student.lastName}
+                  </td>
+                  <td>{student.score}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
       ) : (
         <div className="student">
           {studentDetails.map((student, index) => (
