@@ -12,6 +12,7 @@ const AddFiles = () => {
   const [studentDetails, setStudentDetails] = useState([]);
   const [expandedStudent, setExpandedStudent] = useState(null);
   const fileInputRef = useRef(null);
+  const [expandErrors, setExpandErrors] = useState([]);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -62,7 +63,6 @@ const AddFiles = () => {
     if (selectedFiles.length > 0) {
       const formData = new FormData();
       formData.append("quizid", quizid);
-      formData.append("studentid", userId);
       formData.append("image", selectedFiles[0]);
 
       try {
@@ -95,29 +95,71 @@ const AddFiles = () => {
 
   const toggleExpand = async (index, studentId) => {
     if (expandedStudent === index) {
+      // Hide expanded content when clicking again
       setExpandedStudent(null);
+      // Clear error message when hiding expanded content
+      setExpandErrors((prevErrors) => {
+        const updatedErrors = [...prevErrors];
+        updatedErrors[index] = null;
+        return updatedErrors;
+      });
     } else {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/studentquiz/get?id=665beeef0b880636bee5cc5b`
+          `http://localhost:8080/api/studentquiz/get?studentid=${studentId}`
         );
         const studentQuiz = response.data;
-        setStudentDetails((prevDetails) =>
-          prevDetails.map((student, i) =>
-            i === index ? { ...student, studentQuiz } : student
-          )
-        );
-        setExpandedStudent(index);
+        if (studentQuiz.message) {
+          // Set error message for the student
+          setExpandErrors((prevErrors) => {
+            const updatedErrors = [...prevErrors];
+            updatedErrors[index] = studentQuiz.message;
+            return updatedErrors;
+          });
+        } else if (!studentQuiz.base64Image) {
+          setExpandErrors((prevErrors) => {
+            const updatedErrors = [...prevErrors];
+            updatedErrors[index] = "No data found.";
+            return updatedErrors;
+          });
+        } else {
+          setExpandErrors((prevErrors) => {
+            const updatedErrors = [...prevErrors];
+            updatedErrors[index] = null;
+            return updatedErrors;
+          });
+          setStudentDetails((prevDetails) =>
+            prevDetails.map((student, i) =>
+              i === index ? { ...student, studentQuiz } : student
+            )
+          );
+          // Show expanded content when clicking
+          setExpandedStudent(index);
+        }
       } catch (error) {
         console.error("Error fetching student quiz details:", error);
+        if (error.response && error.response.status === 404) {
+          setExpandErrors((prevErrors) => {
+            const updatedErrors = [...prevErrors];
+            updatedErrors[index] = "No Answers Found";
+            return updatedErrors;
+          });
+        } else {
+          setExpandErrors((prevErrors) => {
+            const updatedErrors = [...prevErrors];
+            updatedErrors[index] = "Error fetching data.";
+            return updatedErrors;
+          });
+        }
+        setExpandedStudent(index);
       }
     }
   };
-
-  const handleUserProfileClick = (classId) => {
+  
+  const handleUserProfileClick = () => {
     navigate(`/userprofile/${username}`);
   };
-  
+
   return (
     <>
       <div className="teacher-dashboard-container">
@@ -159,45 +201,55 @@ const AddFiles = () => {
         </div>
       </div>
       <div className="student">
-      {studentDetails.map((student, index) => (
-        <div key={index} className="student-item">
-          <div className="name-toggle-container" onClick={() => toggleExpand(index, student.id)}>
-            <img
-              src={
-                expandedStudent === index
-                  ? "/images/expand2.png"
-                  : "/images/expand1.png"
-              }
-              alt="Expand"
-              className="expand-icon"
-            />
-            <p className="student-name">
-              {student.firstname} {student.lastname}
-            </p>
-          </div>
-          {expandedStudent === index && student.studentQuiz && (
-            <div className="additional-content">
-                <img
-                  src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
-                  alt="Student Quiz"
-                  className="student-quiz-image"
-                />
-              <div className="recognized-text">
-                <p style={{ fontWeight: "bold" }}>Extracted Text</p>
-                {student.studentQuiz.recognizedtext &&
-                  student.studentQuiz.recognizedtext.split("\n").map((line, i) => (
-                    <p key={i}>{line}</p>
-                  ))}
-              </div>
-              <p className="student-score">
-                <p style={{fontWeight: "bold"}}>Score:</p> {student.studentQuiz.score}
+        {studentDetails.map((student, index) => (
+          <div key={index} className="student-item">
+            <div
+              className="name-toggle-container"
+              onClick={() => toggleExpand(index, student.userid)}
+            >
+              <img
+                src={
+                  expandedStudent === index
+                      ? "/images/expand2.png"
+                    : "/images/expand1.png"
+                }
+                alt="Expand"
+                className="expand-icon"
+              />
+              <p className="student-name">
+                {student.firstname} {student.lastname}
               </p>
             </div>
-          )}
-        </div>
-      ))}
-    </div>
-    
+            {expandedStudent === index &&
+              !expandErrors[index] &&
+              student.studentQuiz && (
+                <div className="additional-content">
+                  <img
+                    src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
+                    alt="Student Quiz"
+                    className="student-quiz-image"
+                  />
+                  <div className="recognized-text">
+                    <p style={{ fontWeight: "bold" }}>Extracted Text</p>
+                    {student.studentQuiz.recognizedtext &&
+                      student.studentQuiz.recognizedtext
+                        .split("\n")
+                        .map((line, i) => <p key={i}>{line}</p>)}
+                  </div>
+                  <p className="student-score">
+                    <p style={{ fontWeight: "bold" }}>Score:</p>{" "}
+                    {student.studentQuiz.score}
+                  </p>
+                </div>
+              )}
+            {expandErrors[index] && (
+              <div className="additional-content">
+                <div className="error-message">{expandErrors[index]}</div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
       {showModal && (
         <div className="modal">
           <div className="modal-content">
