@@ -10,7 +10,7 @@ const AddFiles = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [studentDetails, setStudentDetails] = useState([]);
-  const [expandedStudent, setExpandedStudent] = useState(null); // State to track expanded student
+  const [expandedStudent, setExpandedStudent] = useState(null);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -114,6 +114,10 @@ const AddFiles = () => {
       }
     }
   };
+
+  const handleUserProfileClick = (classId) => {
+    navigate(`/userprofile/${username}`);
+  };
   
   return (
     <>
@@ -130,7 +134,7 @@ const AddFiles = () => {
           </p>
         </div>
         <div className="action-container">
-          <div className="user-icon-container">
+          <div className="user-icon-container" onClick={handleUserProfileClick}>
             <img
               src="/images/UserIcon.png"
               alt="User Icon"

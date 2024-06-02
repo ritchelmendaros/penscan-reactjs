@@ -51,6 +51,10 @@ const StudentDashboard = () => {
     navigate(`/studentdashboard/${username}`);
   };
 
+  const handleUserProfileClick = (classId) => {
+    navigate(`/userprofile/${username}`);
+  };
+
   return (
     <>
       <div className="student-dashboard-container">
@@ -59,7 +63,7 @@ const StudentDashboard = () => {
           <p className="dashboard-text" onClick={handleDashboardOnclick}>Dashboard</p>
         </div>
         <div className="action-container">
-          <div className="user-icon-container">
+          <div className="user-icon-container" onClick={handleUserProfileClick}>
             <img
               src="/images/UserIcon.png"
               alt="User Icon"
@@ -69,7 +73,7 @@ const StudentDashboard = () => {
         </div>
       </div>
       <div className="classes-container">
-        <p className="classes-text">Classes</p>
+        <p className="classes-text" style={{backgroundColor: "transparent", marginLeft: "-15px"}}>Classes</p>
       </div>
       <div className="class-names-container">
         {userClasses.map((classData, index) => (

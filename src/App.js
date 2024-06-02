@@ -26,7 +26,7 @@ function App() {
         <Route path="/teacherclassfiles/:classid/:username" element={<TeacherClassFiles />} />
         <Route path="/addstudent/:classid/:username" element={<AddStudent />} />
         <Route path="/addquiz/:classid/:username" element={<AddQuiz />} />
-        <Route path="/addfiles/:classid/:userid/:quizid" element={<AddFiles />} />
+        <Route path="/addfiles/:classid/:username/:userid/:quizid" element={<AddFiles />} />
       </Routes>
     </BrowserRouter>
   );

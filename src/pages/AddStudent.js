@@ -106,6 +106,10 @@ const AddStudent = () => {
     setErrorMessage("");
   };
 
+  const handleUserProfileClick = (classId) => {
+    navigate(`/userprofile/${username}`);
+  };
+
   return (
     <>
       <div className="addstudent-dashboard-container">
@@ -114,7 +118,7 @@ const AddStudent = () => {
           <p className="dashboard-text" onClick={handleDashboardOnclick}>Dashboard</p>
         </div>
         <div className="action-container">
-          <div className="user-icon-container">
+          <div className="user-icon-container" onClick={handleUserProfileClick}>
             <img
               src="/images/UserIcon.png"
               alt="User Icon"

@@ -8,7 +8,8 @@ const UserProfile = () => {
   const { username } = useParams();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [showPopup, setShowPopup] = useState(false); // State for controlling pop-up visibility
+  const [usertype, setUserType] = useState("");
+  const [showPopup, setShowPopup] = useState(false); 
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -18,6 +19,7 @@ const UserProfile = () => {
         if (user) {
           setFirstName(user.firstname);
           setLastName(user.lastname);
+          setUserType(user.userType);
         }
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -28,7 +30,11 @@ const UserProfile = () => {
   }, [username]);
 
   const handleDashboardOnclick = () => {
-    navigate(`/teacherdashboard/${username}`);
+    if(usertype==="Teacher") {
+      navigate(`/teacherdashboard/${username}`);
+    } else {
+      navigate(`/studentdashboard/${username}`);
+    }
   };
 
   const handleEditClick = async () => {

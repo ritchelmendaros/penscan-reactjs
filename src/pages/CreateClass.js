@@ -64,6 +64,10 @@ const CreateClass = () => {
     setErrorMessage("");
   };
 
+  const handleUserProfileClick = (classId) => {
+    navigate(`/userprofile/${username}`);
+  };
+
   return (
     <>
       <div className="createclass-dashboard-container">
@@ -72,7 +76,7 @@ const CreateClass = () => {
           <p className="dashboard-text" onClick={handleDashboardOnclick}>Dashboard</p>
         </div>
         <div className="action-container">
-          <div className="user-icon-container">
+          <div className="user-icon-container" onClick={handleUserProfileClick}>
             <img
               src="/images/UserIcon.png"
               alt="User Icon"
