@@ -6,8 +6,8 @@
 
 .classes-text-container {
   display: flex;
-  margin-left: 10px;
-  gap: 1220px;
+  margin-left: 5px;
+  gap: 1210px;
 }
 
 .classes-text {
@@ -144,41 +144,38 @@
 }
 
 .student-item {
-  display: flex;
-  align-items: center;
+  position: relative;
   margin-top: 20px;
+  
 }
 
 .expand-icon {
+  position: absolute;
+  left: -10px; 
   width: 20px;
   height: 20px;
-  margin-right: 5px;
-  cursor: pointer;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .student-name {
   font-family: 'Inter', sans-serif;
   font-weight: bold;
   color: #002C66;
-  margin: 0;
-  cursor: pointer;
+  margin: 0 30px 0 15px; 
+  display: inline-block;
 }
-
-.student-name:hover {
-  text-decoration: underline;
-}
-
 .additional-content {
-  margin-left: 25px;
+  margin-left: 50px;
   margin-top: 10px;
 }
 
 .student-quiz-image {
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
   margin-top: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .recognized-text {
@@ -191,4 +188,16 @@
   font-family: 'Inter', sans-serif;
   color: #002C66;
   margin-top: 10px;
+}
+
+.student {
+  margin-top: 20px;
+  margin-left: 100px;
+  margin-bottom: 50px;
+}
+
+.name-toggle-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 }

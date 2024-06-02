@@ -10,7 +10,7 @@ const AddFiles = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [studentDetails, setStudentDetails] = useState([]);
-  const [expandedStudents, setExpandedStudents] = useState([]);
+  const [expandedStudent, setExpandedStudent] = useState(null); // State to track expanded student
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -34,18 +34,7 @@ const AddFiles = () => {
         const response = await axios.get(
           `http://localhost:8080/api/students/getstudentsbyclassid?classid=${classid}`
         );
-        const students = response.data;
-
-        const studentsWithQuizDetails = await Promise.all(
-          students.map(async (student) => {
-            const quizResponse = await axios.get(
-              `http://localhost:8080/api/studentquiz/get?id=665b3c540b880636bee5cc41`
-            );
-            return { ...student, studentQuiz: quizResponse.data };
-          })
-        );
-
-        setStudentDetails(studentsWithQuizDetails);
+        setStudentDetails(response.data);
       } catch (error) {
         console.error("Error fetching student details:", error);
       }
@@ -105,17 +94,27 @@ const AddFiles = () => {
     );
   };
 
-  const toggleExpand = (index) => {
-    const expandedCopy = [...expandedStudents];
-    const currentIndex = expandedCopy.indexOf(index);
-    if (currentIndex === -1) {
-      expandedCopy.push(index);
+  const toggleExpand = async (index, studentId) => {
+    if (expandedStudent === index) {
+      setExpandedStudent(null);
     } else {
-      expandedCopy.splice(currentIndex, 1);
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/studentquiz/get?id=665b3c540b880636bee5cc41`
+        );
+        const studentQuiz = response.data;
+        setStudentDetails((prevDetails) =>
+          prevDetails.map((student, i) =>
+            i === index ? { ...student, studentQuiz } : student
+          )
+        );
+        setExpandedStudent(index);
+      } catch (error) {
+        console.error("Error fetching student quiz details:", error);
+      }
     }
-    setExpandedStudents(expandedCopy);
   };
-
+  
   return (
     <>
       <div className="teacher-dashboard-container">
@@ -156,33 +155,32 @@ const AddFiles = () => {
           />
         </div>
       </div>
-
+      <div className="student">
       {studentDetails.map((student, index) => (
-      <div key={index} className="student-item">
-        <div className="student-header">
-          <div className="name-toggle-container">
+        <div key={index} className="student-item">
+          <div className="name-toggle-container" onClick={() => toggleExpand(index, student.id)}>
             <img
               src={
-                expandedStudents.includes(index)
+                expandedStudent === index
                   ? "/images/expand2.png"
                   : "/images/expand1.png"
               }
               alt="Expand"
               className="expand-icon"
-              onClick={() => toggleExpand(index)}
             />
-            <p className="student-name">{student.firstname} {student.lastname}</p>
+            <p className="student-name">
+              {student.firstname} {student.lastname}
+            </p>
           </div>
-          </div>
-          {expandedStudents.includes(index) && student.studentQuiz && (
+          {expandedStudent === index && student.studentQuiz && (
             <div className="additional-content">
-              <img
-                src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
-                alt="Student Quiz"
-                className="student-quiz-image"
-              />
+                <img
+                  src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
+                  alt="Student Quiz"
+                  className="student-quiz-image"
+                />
               <div className="recognized-text">
-              <p style={{fontWeight: "bold"}}>Extracted Text</p>
+                <p style={{ fontWeight: "bold" }}>Extracted Text</p>
                 {student.studentQuiz.recognizedtext &&
                   student.studentQuiz.recognizedtext.split("\n").map((line, i) => (
                     <p key={i}>{line}</p>
@@ -195,12 +193,13 @@ const AddFiles = () => {
           )}
         </div>
       ))}
-
+    </div>
+    
       {showModal && (
         <div className="modal">
           <div className="modal-content">
             <span className="close-button" onClick={handleCloseModal}>
-            &times;
+              &times;
             </span>
             <h3>Selected Images</h3>
             <div className="image-preview-container">
