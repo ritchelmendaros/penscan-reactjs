@@ -89,7 +89,7 @@ const TeacherClassFiles = () => {
         <p className="classes-text-container">
             Class Files
         </p>
-        <div className="buttons-container">
+        <div className="teacherfiles-buttons-container">
           <button className="create-class-button" onClick={handleAddQuizClick}>
             Add Quiz
           </button>

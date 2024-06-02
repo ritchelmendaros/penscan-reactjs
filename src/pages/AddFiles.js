@@ -210,17 +210,21 @@ const AddFiles = () => {
         </div>
       </div>
       <div className="buttons-container">
-        <button className="class-files-button" onClick={handleClassFilesClick}>
+        <button
+          className={`class-files-button ${!showAnalysis ? 'active' : ''}`}
+          onClick={handleClassFilesClick}
+        >
           Class Files
         </button>
-        <button className="analysis-button" onClick={handleAnalysisClick}>
+        <button
+          className={`analysis-button ${showAnalysis ? 'active' : ''}`}
+          onClick={handleAnalysisClick}
+        >
           Analysis
         </button>
       </div>
       {showAnalysis ? (
         <div className="analysis-table">
-          <h2>Analysis</h2>
-          {/* Add your analysis table here */}
         </div>
       ) : (
         <div className="student">
@@ -289,11 +293,11 @@ const AddFiles = () => {
                 <div key={index} className="image-preview">
                   <img
                     src={URL.createObjectURL(file)}
-                    alt={`Selected ${index}`}
-                    className="selected-image"
+                    alt={`Selected file ${index}`}
+                    className="preview-image"
                   />
                   <button
-                    className="remove-button"
+                    className="remove-image-button"
                     onClick={() => handleRemoveImage(index)}
                   >
                     Remove

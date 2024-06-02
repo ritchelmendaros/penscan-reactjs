@@ -11,9 +11,9 @@
 }
 
 .classes-text {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: bold;
-  color: #002C66;
+  color: #002c66;
   background-color: gray;
   padding: 10px 20px;
   border: none;
@@ -22,12 +22,12 @@
 }
 
 .classes-text.active-tab {
-  background-color: #002C66;
+  background-color: #002c66;
   color: white;
 }
 
 .create-class-button {
-  background-color: #002C66;
+  background-color: #002c66;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -51,7 +51,7 @@
 }
 
 .upload-button {
-  background-color: #002C66;
+  background-color: #002c66;
   color: white;
   font-weight: bold;
   border: none;
@@ -82,7 +82,7 @@
 }
 
 .modal-content {
-  color: #002C66;
+  color: #002c66;
   background-color: white;
   padding: 20px;
   border-radius: 5px;
@@ -130,7 +130,7 @@
 }
 
 .submit-button {
-  background-color: #002C66;
+  background-color: #002c66;
   color: white;
   font-weight: bold;
   border: none;
@@ -147,12 +147,11 @@
 .student-item {
   position: relative;
   margin-top: 20px;
-  
 }
 
 .expand-icon {
   position: absolute;
-  left: -10px; 
+  left: -10px;
   width: 20px;
   height: 20px;
   top: 50%;
@@ -160,10 +159,10 @@
 }
 
 .student-name {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: bold;
-  color: #002C66;
-  margin: 0 30px 0 15px; 
+  color: #002c66;
+  margin: 0 30px 0 15px;
   display: inline-block;
 }
 .additional-content {
@@ -180,14 +179,15 @@
 }
 
 .recognized-text {
-  font-family: 'Inter', sans-serif;
-  color: #002C66;
+  font-family: "Inter", sans-serif;
+  color: #002c66;
   margin-top: 10px;
+  flex: 1;
 }
 
 .student-score {
-  font-family: 'Inter', sans-serif;
-  color: #002C66;
+  font-family: "Inter", sans-serif;
+  color: #002c66;
   margin-top: 10px;
 }
 
@@ -203,11 +203,54 @@
   cursor: pointer;
 }
 
-
 body {
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 body::-webkit-scrollbar {
   width: 0;
+}
+
+.answer-key {
+  margin-left: 20px; 
+  flex: 1;
+}
+
+.recognized-text-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.buttons-container {
+  margin-left: 90px;
+}
+
+.buttons-container button {
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  width: 120px;
+  font-size: 14px;
+  padding: 10px;
+  background-color: lightgray;
+  color: #002c66;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.buttons-container button.active {
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  width: 120px;
+  font-size: 14px;
+  padding: 10px;
+  background-color: #002c66;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+  margin-top: 10px;
 }
