@@ -16,6 +16,7 @@ const AddFiles = () => {
   const [answerKey, setAnswerKey] = useState("");
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [itemAnalysis, setItemAnalysis] = useState([]);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -83,6 +84,23 @@ const AddFiles = () => {
   useEffect(() => {
     if (showAnalysis) {
       fetchScoresAndStudentDetails();
+    }
+  }, [showAnalysis, quizid]);
+
+  const fetchItemAnalysis = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/item-analyses/getitemanalysis?quizid=${quizid}`
+      );
+      setItemAnalysis(response.data);
+    } catch (error) {
+      console.error("Error fetching item analysis:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (showAnalysis) {
+      fetchItemAnalysis();
     }
   }, [showAnalysis, quizid]);
 
@@ -264,46 +282,52 @@ const AddFiles = () => {
         </button>
       </div>
       {showAnalysis ? (
-  <div className="analysis-table">
-    <div>
-      <h3>Student Rankings</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Student Name</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {studentDetails
-            .sort((a, b) => b.score - a.score)
-            .map((student, index) => (
-              <tr key={index}>
-                <td>
-                  {student.firstName} {student.lastName}
-                </td>
-                <td>{student.score}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    </div>
-    <div>
-      <h3>Item Analysis</h3> 
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Correct</th>
-            <th>Incorrect</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-        </tbody>
-      </table>
-    </div>
-  </div>
+        <div className="analysis-table">
+          <div>
+            <h3>Student Rankings</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {studentDetails
+                  .sort((a, b) => b.score - a.score)
+                  .map((student, index) => (
+                    <tr key={index}>
+                      <td>
+                        {student.firstName} {student.lastName}
+                      </td>
+                      <td>{student.score}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h3>Item Analysis</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Correct</th>
+                  <th>Incorrect</th>
+                </tr>
+              </thead>
+              <tbody>
+              {itemAnalysis.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.itemNumber}</td>
+                    <td>{item.correctCount}</td>
+                    <td>{item.incorrectCount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       ) : (
         <div className="student">
           {studentDetails.map((student, index) => (
@@ -400,10 +424,12 @@ const AddFiles = () => {
               ))}
             </div>
             <button
-              className={`upload-button ${isLoading ? "loading" : "upload-button"}`}
+              className={`upload-button ${
+                isLoading ? "loading" : "upload-button"
+              }`}
               onClick={handleSubmit}
             >
-              {isLoading ?  "Loading..." : "Upload"}
+              {isLoading ? "Loading..." : "Upload"}
             </button>
           </div>
         </div>

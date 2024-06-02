@@ -308,6 +308,11 @@ body::-webkit-scrollbar {
   background-color: #f9f9f9;
 }
 
+.analysis-table tr:nth-child(odd) {
+  font-family: "Inter", sans-serif;
+  background-color: #f9f9f9;
+}
+
 .analysis-table tr:hover {
   background-color: #ddd;
   font-family: "Inter", sans-serif;
