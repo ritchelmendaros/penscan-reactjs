@@ -264,22 +264,29 @@ body::-webkit-scrollbar {
 
 
 .analysis-table {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-top: 50px;
   letter-spacing: 1px;
-  margin-left: 200px;
+}
+
+.analysis-table > div {
+  width: 48%; 
 }
 
 .analysis-table h3 {
   margin-bottom: 20px;
-  margin-left: 120px;
   font-family: "Inter", sans-serif;
   color: #002c66;
+  text-align: center;
 }
 
 .analysis-table table {
-  width: 30%;
+  width: 60%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  margin-left: 150px;
 }
 
 .analysis-table th,
@@ -305,6 +312,7 @@ body::-webkit-scrollbar {
   background-color: #ddd;
   font-family: "Inter", sans-serif;
 }
+
 
 .buttons-container {
   margin-top: 40px;

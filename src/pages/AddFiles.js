@@ -264,42 +264,46 @@ const AddFiles = () => {
         </button>
       </div>
       {showAnalysis ? (
-        <div className="analysis-table">
-          <h3>Student Rankings</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Student Name</th>
-                <th>Score</th>
+  <div className="analysis-table">
+    <div>
+      <h3>Student Rankings</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {studentDetails
+            .sort((a, b) => b.score - a.score)
+            .map((student, index) => (
+              <tr key={index}>
+                <td>
+                  {student.firstName} {student.lastName}
+                </td>
+                <td>{student.score}</td>
               </tr>
-            </thead>
-            <tbody>
-              {studentDetails
-                .sort((a, b) => b.score - a.score)
-                .map((student, index) => (
-                  <tr key={index}>
-                    <td>
-                      {student.firstName} {student.lastName}
-                    </td>
-                    <td>{student.score}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-          <h3>Item Analysis</h3> {/* New item analysis table */}
-          <table>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Correct</th>
-                <th>Incorrect</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Populate with item analysis data */}
-            </tbody>
-          </table>
-        </div>
+            ))}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Item Analysis</h3> 
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Correct</th>
+            <th>Incorrect</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
       ) : (
         <div className="student">
           {studentDetails.map((student, index) => (
