@@ -1,10 +1,7 @@
-/* AddFiles.css */
-
 .classes-container {
   display: flex;
   gap: 10px;
   margin-left: auto;
-  margin-bottom: 50px;
 }
 
 .classes-text-container {
@@ -157,6 +154,8 @@
 }
 
 .expand-icon {
+  width: 20px; /* Set the size of the expand icon */
+  height: 20px; /* Set the size of the expand icon */
   margin-right: 5px;
   cursor: pointer;
 }
@@ -171,9 +170,4 @@
 
 .student-name:hover {
   text-decoration: underline;
-}
-
-.expand-icon {
-  font-weight: bold;
-  font-size: 20px;
 }

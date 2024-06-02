@@ -144,14 +144,15 @@ const AddFiles = () => {
 
       {studentDetails.map((student, index) => (
         <div key={index} className="student-item">
-          <span className="expand-icon" onClick={() => toggleExpand(index)}>
-            {expandedStudent === index ? "-" : ">"}
-          </span>
+          <img
+            src={expandedStudent === index ? "/images/expand2.png" : "/images/expand1.png"}
+            alt="Expand"
+            className="expand-icon"
+            onClick={() => toggleExpand(index)}
+          />
           <p className="student-name">{student.firstname} {student.lastname}</p>
           {expandedStudent === index && (
             <div className="additional-content">
-              {/* Additional content to be shown when expanded */}
-              {/* Example: <p>Additional Information</p> */}
             </div>
           )}
         </div>
