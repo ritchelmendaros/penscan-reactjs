@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
-import "../css/AddFiles.css";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "../css/StudentFile.css";
 
 const StudentFile = () => {
   const navigate = useNavigate();
-  const { username, classid } = useParams();
+  const { classid, username } = useParams();
   const [userId, setUserId] = useState(null);
+  const [quizNames, setQuizNames] = useState([]);
+  const [expandedQuiz, setExpandedQuiz] = useState(null);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -23,14 +25,33 @@ const StudentFile = () => {
     fetchUserId();
   }, [username]);
 
+  useEffect(() => {
+    const fetchQuizNames = async () => {
+      if (userId && classid) {
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/api/students/getquizidsandnamesbyuseridandclassid?userid=${userId}&classid=${classid}`
+          );
+          setQuizNames(response.data);
+        } catch (error) {
+          console.error("Error fetching quiz names:", error);
+        }
+      }
+    };
 
+    fetchQuizNames();
+  }, [userId, classid]);
 
   const handleDashboardOnclick = () => {
-    navigate(`/teacherdashboard/${username}`);
+    navigate(`/studentdashboard/${username}`);
   };
 
   const handleUserProfileClick = () => {
     navigate(`/userprofile/${username}`);
+  };
+
+  const toggleExpand = (index) => {
+    setExpandedQuiz(expandedQuiz === index ? null : index);
   };
 
   return (
@@ -62,12 +83,36 @@ const StudentFile = () => {
         </div>
       </div>
       <div className="buttons-container">
-        <button style={{backgroundColor: "transparent", marginLeft: "-15px", fontSize: "15px"}}
+        <button
+          style={{
+            backgroundColor: "transparent",
+            marginLeft: "-15px",
+            fontSize: "15px",
+          }}
         >
           Class Files
         </button>
-        </div>
-    
+      </div>
+      <div>
+        {quizNames.map((quiz, index) => (
+          <div
+            key={index}
+            onClick={() => toggleExpand(index)}
+            className="student-name-container"
+          >
+            <img
+              src={
+                expandedQuiz === index
+                  ? "/images/expand2.png"
+                  : "/images/expand1.png"
+              }
+              alt="Expand"
+              className="quizexpand-icon"
+            />
+            <span className="quiz-name">{quiz.quizName}</span>
+          </div>
+        ))}
+      </div>
     </>
   );
 };

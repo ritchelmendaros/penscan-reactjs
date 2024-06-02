@@ -1,0 +1,119 @@
+body {
+    letter-spacing: 1px;
+    overflow-y: auto;
+  }
+  
+  body::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  .teacher-dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .logo {
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .dashboard-text {
+    font-size: 15px;
+  }
+  
+  .action-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-icon-container {
+    cursor: pointer;
+  }
+  
+  .user-icon {
+    height: 40px;
+  }
+  
+  .buttons-container {
+    margin-top: 20px;
+  }
+  
+  .student-name-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px 0;
+  }
+  
+  .quizexpand-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    margin-left: 90px;
+  }
+  
+  .quiz-name {
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    color: #002c66;
+  }
+  
+  .student {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 50px;
+  }
+  
+  .additional-content {
+    margin-left: 40px;
+    margin-top: 10px;
+  }
+  
+  .student-quiz-image {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .student-score {
+    font-family: "Inter", sans-serif;
+    color: #002c66;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .table-container {
+    margin-top: 20px;
+  }
+  
+  .text-answer-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .text-answer-table th,
+  .text-answer-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .text-answer-table th {
+    background-color: #f5f5f5;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
