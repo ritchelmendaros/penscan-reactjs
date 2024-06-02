@@ -132,6 +132,7 @@
 .submit-button {
   background-color: #002C66;
   color: white;
+  font-weight: bold;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
