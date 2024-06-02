@@ -104,8 +104,8 @@ const AddFiles = () => {
     } else {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/studentquiz/get?studentid=${studentId}`
-        );
+          `http://localhost:8080/api/studentquiz/get?studentid=${studentId}&quizid=${quizid}`
+        );        
         const studentQuiz = response.data;
         if (studentQuiz.message) {
           setExpandErrors((prevErrors) => {
