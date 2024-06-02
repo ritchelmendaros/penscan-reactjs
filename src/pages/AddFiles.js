@@ -306,28 +306,41 @@ const AddFiles = () => {
               </div>
               {expandedStudent === index && student.studentQuiz && (
                 <div className="additional-content">
+                  <p className="student-score" style={{ fontWeight: "bold", marginTop: "20px" }}>
+                    <span>Score:</span>{" "}
+                    {student.studentQuiz.score}
+                  </p>
                   <img
                     src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
                     alt="Student Quiz"
                     className="student-quiz-image"
                   />
-                  <div className="recognized-text">
-                    <p style={{ fontWeight: "bold" }}>Extracted Text</p>
-                    {student.studentQuiz.recognizedtext &&
-                      student.studentQuiz.recognizedtext
-                        .split("\n")
-                        .map((line, i) => <p key={i}>{line}</p>)}
+                  <div className="table-container">
+                    <table className="text-answer-table text-table">
+                      <thead>
+                        <tr>
+                          <th>Extracted Text</th>
+                          <th>Answer Key</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="recognized-text">
+                            {student.studentQuiz.recognizedtext &&
+                              student.studentQuiz.recognizedtext
+                                .split("\n")
+                                .slice(1)
+                                .map((line, i) => <p key={i}>{line}</p>)}
+                          </td>
+                          <td className="recognized-text answer-key">
+                            {answerKey.split("\n").map((line, i) => (
+                              <p key={i}>{line}</p>
+                            ))}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-                  <div className="recognized-text answer-key">
-                    <p style={{ fontWeight: "bold" }}>Answer Key</p>
-                    {answerKey.split("\n").map((line, i) => (
-                      <p key={i}>{line}</p>
-                    ))}
-                  </div>
-                  <p className="student-score">
-                    <span style={{ fontWeight: "bold" }}>Score:</span>{" "}
-                    {student.studentQuiz.score}
-                  </p>
                 </div>
               )}
               {expandedStudent === index && expandErrors[index] && (
