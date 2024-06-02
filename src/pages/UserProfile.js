@@ -9,12 +9,14 @@ const UserProfile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [usertype, setUserType] = useState("");
-  const [showPopup, setShowPopup] = useState(false); 
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/users/getuserdetails?username=${username}`);
+        const response = await axios.get(
+          `http://localhost:8080/api/users/getuserdetails?username=${username}`
+        );
         const user = response.data;
         if (user) {
           setFirstName(user.firstname);
@@ -30,7 +32,7 @@ const UserProfile = () => {
   }, [username]);
 
   const handleDashboardOnclick = () => {
-    if(usertype==="Teacher") {
+    if (usertype === "Teacher") {
       navigate(`/teacherdashboard/${username}`);
     } else {
       navigate(`/studentdashboard/${username}`);
@@ -43,20 +45,23 @@ const UserProfile = () => {
 
   const handleEditClick = async () => {
     try {
-      const response = await axios.put(`http://localhost:8080/api/users/updateuserdetails`, {
-        username,
-        firstname: firstName,
-        lastname: lastName,
-      });
+      const response = await axios.put(
+        `http://localhost:8080/api/users/updateuserdetails`,
+        {
+          username,
+          firstname: firstName,
+          lastname: lastName,
+        }
+      );
       console.log("User details updated", response);
-      setShowPopup(true); 
+      setShowPopup(true);
     } catch (error) {
       console.error("Error updating user details", error);
     }
   };
 
   const handleClosePopup = () => {
-    setShowPopup(false); 
+    setShowPopup(false);
   };
 
   return (
@@ -69,7 +74,11 @@ const UserProfile = () => {
             className="logo"
             onClick={handleDashboardOnclick}
           />
-          <p className="dashboard-text" onClick={handleDashboardOnclick} style={{fontSize: "15px"}}>
+          <p
+            className="dashboard-text"
+            onClick={handleDashboardOnclick}
+            style={{ fontSize: "15px" }}
+          >
             Dashboard
           </p>
         </div>
@@ -97,13 +106,13 @@ const UserProfile = () => {
           />
         </div>
         <div className="editbutton-container">
-  <button className="edit-button" onClick={handleEditClick}>
-    Edit
-  </button>
-  <button className="edit-button" onClick={handleLogoutClick}>
-    Logout
-  </button>
-</div>
+          <button className="edit-button" onClick={handleEditClick}>
+            Edit
+          </button>
+          <button className="edit-button" onClick={handleLogoutClick}>
+            Logout
+          </button>
+        </div>
       </div>
       {showPopup && (
         <div className="popup">

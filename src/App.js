@@ -11,6 +11,7 @@ import AddStudent from './pages/AddStudent';
 import AddFiles from './pages/AddFiles';
 import AddQuiz from './pages/AddQuiz';
 import UserProfile from './pages/UserProfile';
+import StudentFile from './pages/StudentFile';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/addstudent/:classid/:username" element={<AddStudent />} />
         <Route path="/addquiz/:classid/:username" element={<AddQuiz />} />
         <Route path="/addfiles/:classid/:username/:userid/:quizid" element={<AddFiles />} />
+        <Route path="/studentfiles/:classid/:username" element={<StudentFile />} />
       </Routes>
     </BrowserRouter>
   );
