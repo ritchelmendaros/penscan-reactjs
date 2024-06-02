@@ -14,6 +14,7 @@ const AddFiles = () => {
   const fileInputRef = useRef(null);
   const [expandErrors, setExpandErrors] = useState([]);
   const [answerKey, setAnswerKey] = useState("");
+  const [showAnalysis, setShowAnalysis] = useState(false);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -66,6 +67,14 @@ const AddFiles = () => {
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
+  };
+
+  const handleAnalysisClick = () => {
+    setShowAnalysis(true);
+  };
+
+  const handleClassFilesClick = () => {
+    setShowAnalysis(false);
   };
 
   const handleFileChange = (event) => {
@@ -200,76 +209,74 @@ const AddFiles = () => {
           </div>
         </div>
       </div>
-      <div className="classes-container">
-        <div className="classes-text-container">
+      <div className="buttons-container">
+        <button className="class-files-button" onClick={handleClassFilesClick}>
           Class Files
-          <button className="upload-button" onClick={handleUploadClick}>
-            UPLOAD
-          </button>
-          <input
-            type="file"
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            onChange={handleFileChange}
-            multiple
-            accept="image/*"
-          />
-        </div>
+        </button>
+        <button className="analysis-button" onClick={handleAnalysisClick}>
+          Analysis
+        </button>
       </div>
-      <div className="student">
-        {studentDetails.map((student, index) => (
-          <div key={index} className="student-item">
-            <div
-              className="name-toggle-container"
-              onClick={() => toggleExpand(index, student.userid)}
-            >
-              <img
-                src={
-                  expandedStudent === index
-                    ? "/images/expand2.png"
-                    : "/images/expand1.png"
-                }
-                alt="Expand"
-                className="expand-icon"
-              />
-              <p className="student-name">
-                {student.firstname} {student.lastname}
-              </p>
-            </div>
-            {expandedStudent === index && student.studentQuiz && (
-              <div className="additional-content">
+      {showAnalysis ? (
+        <div className="analysis-table">
+          <h2>Analysis</h2>
+          {/* Add your analysis table here */}
+        </div>
+      ) : (
+        <div className="student">
+          {studentDetails.map((student, index) => (
+            <div key={index} className="student-item">
+              <div
+                className="name-toggle-container"
+                onClick={() => toggleExpand(index, student.userid)}
+              >
                 <img
-                  src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
-                  alt="Student Quiz"
-                  className="student-quiz-image"
+                  src={
+                    expandedStudent === index
+                      ? "/images/expand2.png"
+                      : "/images/expand1.png"
+                  }
+                  alt="Expand"
+                  className="expand-icon"
                 />
-                <div className="recognized-text">
-                  <p style={{ fontWeight: "bold" }}>Extracted Text</p>
-                  {student.studentQuiz.recognizedtext &&
-                    student.studentQuiz.recognizedtext
-                      .split("\n")
-                      .map((line, i) => <p key={i}>{line}</p>)}
-                </div>
-                <div className="recognized-text answer-key">
-                  <p style={{ fontWeight: "bold" }}>Answer Key</p>
-                  {answerKey.split("\n").map((line, i) => (
-                    <p key={i}>{line}</p>
-                  ))}
-                </div>
-                <p className="student-score">
-                  <p style={{ fontWeight: "bold" }}>Score:</p>{" "}
-                  {student.studentQuiz.score}
+                <p className="student-name">
+                  {student.firstname} {student.lastname}
                 </p>
               </div>
-            )}
-            {expandedStudent === index && expandErrors[index] && (
-              <div className="additional-content">
-                <div className="error-message">{expandErrors[index]}</div>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+              {expandedStudent === index && student.studentQuiz && (
+                <div className="additional-content">
+                  <img
+                    src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
+                    alt="Student Quiz"
+                    className="student-quiz-image"
+                  />
+                  <div className="recognized-text">
+                    <p style={{ fontWeight: "bold" }}>Extracted Text</p>
+                    {student.studentQuiz.recognizedtext &&
+                      student.studentQuiz.recognizedtext
+                        .split("\n")
+                        .map((line, i) => <p key={i}>{line}</p>)}
+                  </div>
+                  <div className="recognized-text answer-key">
+                    <p style={{ fontWeight: "bold" }}>Answer Key</p>
+                    {answerKey.split("\n").map((line, i) => (
+                      <p key={i}>{line}</p>
+                    ))}
+                  </div>
+                  <p className="student-score">
+                    <span style={{ fontWeight: "bold" }}>Score:</span> {student.studentQuiz.score}
+                  </p>
+                </div>
+              )}
+              {expandedStudent === index && expandErrors[index] && (
+                <div className="additional-content">
+                  <div className="error-message">{expandErrors[index]}</div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
@@ -283,23 +290,30 @@ const AddFiles = () => {
                   <img
                     src={URL.createObjectURL(file)}
                     alt={`Selected ${index}`}
-                    className="preview-image"
+                    className="selected-image"
                   />
                   <button
                     className="remove-button"
                     onClick={() => handleRemoveImage(index)}
                   >
-                    X
+                    Remove
                   </button>
                 </div>
               ))}
             </div>
-            <button className="submit-button" onClick={handleSubmit}>
-              Submit
+            <button className="upload-button" onClick={handleSubmit}>
+              Upload
             </button>
           </div>
         </div>
       )}
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        ref={fileInputRef}
+        style={{ display: "none" }}
+      />
     </>
   );
 };
