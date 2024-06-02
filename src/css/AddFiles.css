@@ -118,9 +118,19 @@
   object-fit: cover;
 }
 
+.remove-button {
+  display: block;
+  margin-top: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
 .submit-button {
   background-color: #002C66;
-  font-weight: bold;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -133,29 +143,15 @@
   background-color: #004080;
 }
 
-.remove-button {
-  background-color: transparent;
-  border: none;
-  color: red;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.remove-button:hover {
-  color: darkred;
-}
-
 .student-item {
   display: flex;
   align-items: center;
-  margin-left: 90px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .expand-icon {
-  width: 20px; /* Set the size of the expand icon */
-  height: 20px; /* Set the size of the expand icon */
+  width: 20px;
+  height: 20px;
   margin-right: 5px;
   cursor: pointer;
 }
@@ -170,4 +166,29 @@
 
 .student-name:hover {
   text-decoration: underline;
+}
+
+.additional-content {
+  margin-left: 25px;
+  margin-top: 10px;
+}
+
+.student-quiz-image {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.recognized-text {
+  font-family: 'Inter', sans-serif;
+  color: #002C66;
+  margin-top: 10px;
+}
+
+.student-score {
+  font-family: 'Inter', sans-serif;
+  color: #002C66;
+  margin-top: 10px;
 }
