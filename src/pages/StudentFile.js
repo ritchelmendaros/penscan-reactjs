@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../css/StudentFile.css";
@@ -9,6 +9,8 @@ const StudentFile = () => {
   const [userId, setUserId] = useState(null);
   const [quizNames, setQuizNames] = useState([]);
   const [expandedQuiz, setExpandedQuiz] = useState(null);
+  const [quizDetails, setQuizDetails] = useState([]);
+  const [answerKey, setAnswerKey] = useState("");
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -42,6 +44,17 @@ const StudentFile = () => {
     fetchQuizNames();
   }, [userId, classid]);
 
+  const fetchAnswerKey = async (quizid) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/quiz/getanswerkey?quizid=${quizid}`
+      );
+      setAnswerKey(response.data);
+    } catch (error) {
+      console.error("Error fetching answer key:", error);
+    }
+  };
+
   const handleDashboardOnclick = () => {
     navigate(`/studentdashboard/${username}`);
   };
@@ -50,8 +63,24 @@ const StudentFile = () => {
     navigate(`/userprofile/${username}`);
   };
 
-  const toggleExpand = (index) => {
-    setExpandedQuiz(expandedQuiz === index ? null : index);
+  const toggleExpand = async (index, quizId) => {
+    if (expandedQuiz === index) {
+      setExpandedQuiz(null);
+    } else {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/studentquiz/get?studentid=${userId}&quizid=${quizId}`
+        );
+        setQuizDetails((prevDetails) => ({
+          ...prevDetails,
+          [index]: response.data,
+        }));
+        await fetchAnswerKey(quizId);
+        setExpandedQuiz(index);
+      } catch (error) {
+        console.error("Error fetching quiz details:", error);
+      }
+    }
   };
 
   return (
@@ -97,7 +126,7 @@ const StudentFile = () => {
         {quizNames.map((quiz, index) => (
           <div
             key={index}
-            onClick={() => toggleExpand(index)}
+            onClick={() => toggleExpand(index, quiz.quizId)}
             className="student-name-container"
           >
             <img
@@ -113,6 +142,46 @@ const StudentFile = () => {
           </div>
         ))}
       </div>
+      {expandedQuiz !== null && quizDetails[expandedQuiz] && (
+        <div className="additional-content">
+          <p className="student-score" style={{ fontWeight: "bold", marginTop: "20px" }}>
+            <span>Score:</span> {quizDetails[expandedQuiz].score}
+          </p>
+          {quizDetails[expandedQuiz].base64Image && (
+            <img
+              src={`data:image/jpeg;base64,${quizDetails[expandedQuiz].base64Image}`}
+              alt="Student Quiz"
+              className="student-quiz-image"
+            />
+          )}
+          <div className="table-container">
+            <table className="text-answer-table text-table">
+              <thead>
+                <tr>
+                  <th>Extracted Text</th>
+                  <th>Answer Key</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="recognized-text">
+                    {quizDetails[expandedQuiz].recognizedtext &&
+                      quizDetails[expandedQuiz].recognizedtext
+                      .split("\n")
+                      .slice(1)
+                      .map((line, i) => <p key={i}>{line}</p>)}
+                  </td>
+                  <td className="recognized-text answer-key">
+                    {answerKey.split("\n").map((line, i) => (
+                      <p key={i}>{line}</p>
+                    ))}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </>
   );
 };
