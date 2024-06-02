@@ -201,3 +201,12 @@
   display: inline-block;
   cursor: pointer;
 }
+
+
+body {
+  overflow-y: auto; 
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+}
