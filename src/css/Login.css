@@ -9,7 +9,7 @@
     text-align: center;
   }
   
-  .logo {
+  .logo-login {
     width: 120px; 
     height: 120px; 
   }
@@ -27,7 +27,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 12px;
     margin-top: 5x;
-    margin-left: 120px;
+    margin-left: 90px;
     font-weight: bold;
     color: #002C66;
   }

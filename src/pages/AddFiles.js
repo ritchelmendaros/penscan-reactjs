@@ -15,6 +15,7 @@ const AddFiles = () => {
   const [expandErrors, setExpandErrors] = useState([]);
   const [answerKey, setAnswerKey] = useState("");
   const [showAnalysis, setShowAnalysis] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -115,6 +116,7 @@ const AddFiles = () => {
       formData.append("image", selectedFiles[0]);
 
       try {
+        setIsLoading(true);
         const response = await axios.post(
           "http://localhost:8080/api/studentquiz/upload",
           formData,
@@ -128,6 +130,8 @@ const AddFiles = () => {
         setShowModal(false);
       } catch (error) {
         console.error("Error uploading file:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -306,9 +310,11 @@ const AddFiles = () => {
               </div>
               {expandedStudent === index && student.studentQuiz && (
                 <div className="additional-content">
-                  <p className="student-score" style={{ fontWeight: "bold", marginTop: "20px" }}>
-                    <span>Score:</span>{" "}
-                    {student.studentQuiz.score}
+                  <p
+                    className="student-score"
+                    style={{ fontWeight: "bold", marginTop: "20px" }}
+                  >
+                    <span>Score:</span> {student.studentQuiz.score}
                   </p>
                   <img
                     src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
@@ -376,8 +382,11 @@ const AddFiles = () => {
                 </div>
               ))}
             </div>
-            <button className="upload-button" onClick={handleSubmit}>
-              Upload
+            <button
+              className={`upload-button ${isLoading ? "loading" : "upload-button"}`}
+              onClick={handleSubmit}
+            >
+              {isLoading ?  "Loading..." : "Upload"}
             </button>
           </div>
         </div>

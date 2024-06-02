@@ -57,7 +57,7 @@ const SignUp = () => {
   return (
     <div className="signup-container">
       <div className="content">
-        <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" />
+        <img src="/images/PenScan_Logo.png" alt="Logo" className="signup-logo" />
         <h2 className="signup-text">SIGN UP</h2>
         <p className="register-text">
           Already have an account?{" "}

@@ -60,7 +60,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="content">
-        <img src="/images/PenScan_Logo.png" alt="Logo" className="logo" />
+        <img src="/images/PenScan_Logo.png" alt="Logo" className="logo-login" />
         <h2 className="login-text">LOGIN</h2>
         <div className="input-container">
           <input
