@@ -95,9 +95,7 @@ const AddFiles = () => {
 
   const toggleExpand = async (index, studentId) => {
     if (expandedStudent === index) {
-      // Hide expanded content when clicking again
       setExpandedStudent(null);
-      // Clear error message when hiding expanded content
       setExpandErrors((prevErrors) => {
         const updatedErrors = [...prevErrors];
         updatedErrors[index] = null;
@@ -110,7 +108,6 @@ const AddFiles = () => {
         );
         const studentQuiz = response.data;
         if (studentQuiz.message) {
-          // Set error message for the student
           setExpandErrors((prevErrors) => {
             const updatedErrors = [...prevErrors];
             updatedErrors[index] = studentQuiz.message;
@@ -133,7 +130,6 @@ const AddFiles = () => {
               i === index ? { ...student, studentQuiz } : student
             )
           );
-          // Show expanded content when clicking
           setExpandedStudent(index);
         }
       } catch (error) {
@@ -203,51 +199,50 @@ const AddFiles = () => {
       <div className="student">
         {studentDetails.map((student, index) => (
           <div key={index} className="student-item">
-            <div
-              className="name-toggle-container"
-              onClick={() => toggleExpand(index, student.userid)}
-            >
+          <div
+            className="name-toggle-container"
+            onClick={() => toggleExpand(index, student.userid)}
+          >
+            <img
+              src={
+                expandedStudent === index
+                  ? "/images/expand2.png"
+                  : "/images/expand1.png"
+              }
+              alt="Expand"
+              className="expand-icon"
+            />
+            <p className="student-name">
+              {student.firstname} {student.lastname}
+            </p>
+          </div>
+          {expandedStudent === index && student.studentQuiz && (
+            <div className="additional-content">
               <img
-                src={
-                  expandedStudent === index
-                      ? "/images/expand2.png"
-                    : "/images/expand1.png"
-                }
-                alt="Expand"
-                className="expand-icon"
+                src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
+                alt="Student Quiz"
+                className="student-quiz-image"
               />
-              <p className="student-name">
-                {student.firstname} {student.lastname}
+              <div className="recognized-text">
+                <p style={{ fontWeight: "bold" }}>Extracted Text</p>
+                {student.studentQuiz.recognizedtext &&
+                  student.studentQuiz.recognizedtext
+                    .split("\n")
+                    .map((line, i) => <p key={i}>{line}</p>)}
+              </div>
+              <p className="student-score">
+                <p style={{ fontWeight: "bold" }}>Score:</p>{" "}
+                {student.studentQuiz.score}
               </p>
             </div>
-            {expandedStudent === index &&
-              !expandErrors[index] &&
-              student.studentQuiz && (
-                <div className="additional-content">
-                  <img
-                    src={`data:image/jpeg;base64,${student.studentQuiz.base64Image}`}
-                    alt="Student Quiz"
-                    className="student-quiz-image"
-                  />
-                  <div className="recognized-text">
-                    <p style={{ fontWeight: "bold" }}>Extracted Text</p>
-                    {student.studentQuiz.recognizedtext &&
-                      student.studentQuiz.recognizedtext
-                        .split("\n")
-                        .map((line, i) => <p key={i}>{line}</p>)}
-                  </div>
-                  <p className="student-score">
-                    <p style={{ fontWeight: "bold" }}>Score:</p>{" "}
-                    {student.studentQuiz.score}
-                  </p>
-                </div>
-              )}
-            {expandErrors[index] && (
-              <div className="additional-content">
-                <div className="error-message">{expandErrors[index]}</div>
-              </div>
-            )}
-          </div>
+          )}
+          {expandedStudent === index && expandErrors[index] && (
+            <div className="additional-content">
+              <div className="error-message">{expandErrors[index]}</div>
+            </div>
+          )}
+        </div>
+        
         ))}
       </div>
       {showModal && (
