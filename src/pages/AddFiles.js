@@ -286,6 +286,19 @@ const AddFiles = () => {
                 ))}
             </tbody>
           </table>
+          <h3>Item Analysis</h3> {/* New item analysis table */}
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Correct</th>
+                <th>Incorrect</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* Populate with item analysis data */}
+            </tbody>
+          </table>
         </div>
       ) : (
         <div className="student">
