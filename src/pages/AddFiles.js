@@ -5,7 +5,7 @@ import axios from "axios";
 
 const AddFiles = () => {
   const navigate = useNavigate();
-  const { username, classid } = useParams();
+  const { username, classid, quizid } = useParams();
   const [userId, setUserId] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -61,9 +61,8 @@ const AddFiles = () => {
   const handleSubmit = async () => {
     if (selectedFiles.length > 0) {
       const formData = new FormData();
-      formData.append("quizid", "your_quiz_id_here");
+      formData.append("quizid", quizid);
       formData.append("studentid", userId);
-      formData.append("score", 100);
       formData.append("image", selectedFiles[0]);
 
       try {
