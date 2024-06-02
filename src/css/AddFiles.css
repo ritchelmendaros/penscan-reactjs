@@ -62,11 +62,12 @@ body {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 10px;
+  margin-top: 20px;
 }
 
 .upload-button:hover {
   background-color: #004080;
+  color: white;
 }
 
 .upload-icon {
@@ -301,4 +302,8 @@ body::-webkit-scrollbar {
 .analysis-table tr:hover {
   background-color: #ddd;
   font-family: "Inter", sans-serif;
+}
+
+.buttons-container {
+  margin-top: 40px;
 }

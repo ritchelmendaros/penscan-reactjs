@@ -235,42 +235,54 @@ const AddFiles = () => {
       </div>
       <div className="buttons-container">
         <button
-          className={`class-files-button ${!showAnalysis ? 'active' : ''}`}
+          className={`class-files-button ${!showAnalysis ? "active" : ""}`}
           onClick={handleClassFilesClick}
         >
           Class Files
         </button>
         <button
-          className={`analysis-button ${showAnalysis ? 'active' : ''}`}
+          className={`analysis-button ${showAnalysis ? "active" : ""}`}
           onClick={handleAnalysisClick}
         >
           Analysis
         </button>
+        <button
+          className="upload-button"
+          onClick={handleUploadClick}
+          style={{
+            backgroundColor: " #002c66",
+            color: "white",
+            borderRadius: "5px",
+            marginLeft: "1050px",
+          }}
+        >
+          Upload
+        </button>
       </div>
       {showAnalysis ? (
         <div className="analysis-table">
-        <h3>Student Rankings</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Student Name</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {studentDetails
-              .sort((a, b) => b.score - a.score)
-              .map((student, index) => (
-                <tr key={index}>
-                  <td>
-                    {student.firstName} {student.lastName}
-                  </td>
-                  <td>{student.score}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+          <h3>Student Rankings</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {studentDetails
+                .sort((a, b) => b.score - a.score)
+                .map((student, index) => (
+                  <tr key={index}>
+                    <td>
+                      {student.firstName} {student.lastName}
+                    </td>
+                    <td>{student.score}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <div className="student">
           {studentDetails.map((student, index) => (
@@ -313,7 +325,8 @@ const AddFiles = () => {
                     ))}
                   </div>
                   <p className="student-score">
-                    <span style={{ fontWeight: "bold" }}>Score:</span> {student.studentQuiz.score}
+                    <span style={{ fontWeight: "bold" }}>Score:</span>{" "}
+                    {student.studentQuiz.score}
                   </p>
                 </div>
               )}
