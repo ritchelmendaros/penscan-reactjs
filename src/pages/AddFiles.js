@@ -13,6 +13,7 @@ const AddFiles = () => {
   const [expandedStudent, setExpandedStudent] = useState(null);
   const fileInputRef = useRef(null);
   const [expandErrors, setExpandErrors] = useState([]);
+  const [answerKey, setAnswerKey] = useState("");
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -43,6 +44,21 @@ const AddFiles = () => {
 
     fetchStudentDetails();
   }, [classid]);
+
+  useEffect(() => {
+    const fetchAnswerKey = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/quiz/getanswerkey?quizid=${quizid}`
+        );
+        setAnswerKey(response.data);
+      } catch (error) {
+        console.error("Error fetching answer key:", error);
+      }
+    };
+
+    fetchAnswerKey();
+  }, [quizid]);
 
   const handleDashboardOnclick = () => {
     navigate(`/teacherdashboard/${username}`);
@@ -105,7 +121,7 @@ const AddFiles = () => {
       try {
         const response = await axios.get(
           `http://localhost:8080/api/studentquiz/get?studentid=${studentId}&quizid=${quizid}`
-        );        
+        );
         const studentQuiz = response.data;
         if (studentQuiz.message) {
           setExpandErrors((prevErrors) => {
@@ -166,7 +182,11 @@ const AddFiles = () => {
             className="logo"
             onClick={handleDashboardOnclick}
           />
-          <p className="dashboard-text" onClick={handleDashboardOnclick} style={{fontSize: "15px"}}>
+          <p
+            className="dashboard-text"
+            onClick={handleDashboardOnclick}
+            style={{ fontSize: "15px" }}
+          >
             Dashboard
           </p>
         </div>
@@ -213,7 +233,7 @@ const AddFiles = () => {
                 className="expand-icon"
               />
               <p className="student-name">
-                {student.firstname} {student.lastname} 
+                {student.firstname} {student.lastname}
               </p>
             </div>
             {expandedStudent === index && student.studentQuiz && (
@@ -229,6 +249,12 @@ const AddFiles = () => {
                     student.studentQuiz.recognizedtext
                       .split("\n")
                       .map((line, i) => <p key={i}>{line}</p>)}
+                </div>
+                <div className="recognized-text answer-key">
+                  <p style={{ fontWeight: "bold" }}>Answer Key</p>
+                  {answerKey.split("\n").map((line, i) => (
+                    <p key={i}>{line}</p>
+                  ))}
                 </div>
                 <p className="student-score">
                   <p style={{ fontWeight: "bold" }}>Score:</p>{" "}
