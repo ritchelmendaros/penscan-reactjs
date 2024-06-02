@@ -59,17 +59,26 @@
   text-align: center;
 }
 
-.edit-button {
+.editbutton-container {
+  display: flex;
+  justify-content: center;
   margin-top: 20px;
+}
+
+.edit-button {
   background-color: #002c66;
   color: white;
   border: none;
   font-family: "Inter", sans-serif;
   font-weight: bold;
-  margin-right: 10px;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 10px; /* Add margin to the right of each button */
+}
+
+.edit-button:last-child {
+  margin-right: 0; /* Remove the margin from the last button */
 }
 
 .popup-button {
@@ -88,5 +97,5 @@
 .popup-message {
   font-family: "Inter", sans-serif;
   font-weight: bold;
-  color: #002c66;
+  background-color: #002c66;
 }

@@ -317,7 +317,7 @@ const AddFiles = () => {
                 </tr>
               </thead>
               <tbody>
-              {itemAnalysis.map((item, index) => (
+                {itemAnalysis.map((item, index) => (
                   <tr key={index}>
                     <td>{item.itemNumber}</td>
                     <td>{item.correctCount}</td>

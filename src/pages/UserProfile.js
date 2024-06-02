@@ -37,6 +37,10 @@ const UserProfile = () => {
     }
   };
 
+  const handleLogoutClick = () => {
+    navigate(`/login`);
+  };
+
   const handleEditClick = async () => {
     try {
       const response = await axios.put(`http://localhost:8080/api/users/updateuserdetails`, {
@@ -92,9 +96,14 @@ const UserProfile = () => {
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
-        <button className="edit-button" onClick={handleEditClick}>
-          Edit
-        </button>
+        <div className="editbutton-container">
+  <button className="edit-button" onClick={handleEditClick}>
+    Edit
+  </button>
+  <button className="edit-button" onClick={handleLogoutClick}>
+    Logout
+  </button>
+</div>
       </div>
       {showPopup && (
         <div className="popup">
