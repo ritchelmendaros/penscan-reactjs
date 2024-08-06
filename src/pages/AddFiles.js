@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "../css/AddFiles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import * as XLSX from "xlsx";
 
 const AddFiles = () => {
   const navigate = useNavigate();
@@ -17,6 +20,9 @@ const AddFiles = () => {
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [itemAnalysis, setItemAnalysis] = useState([]);
+  const [editableText, setEditableText] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentStudentId, setCurrentStudentId] = useState(null);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -26,7 +32,7 @@ const AddFiles = () => {
         );
         setUserId(response.data);
       } catch (error) {
-        console.error("Error fetching user ID:", error);
+        toast.error("Error fetching user ID: " + error.message);
       }
     };
 
@@ -41,7 +47,7 @@ const AddFiles = () => {
         );
         setStudentDetails(response.data);
       } catch (error) {
-        console.error("Error fetching student details:", error);
+        toast.error("Error fetching student details:", error);
       }
     };
 
@@ -56,7 +62,7 @@ const AddFiles = () => {
         );
         setAnswerKey(response.data);
       } catch (error) {
-        console.error("Error fetching answer key:", error);
+        toast.error("Error fetching answer key:", error);
       }
     };
 
@@ -77,7 +83,7 @@ const AddFiles = () => {
       );
       setStudentDetails(studentDetailsArray);
     } catch (error) {
-      console.error("Error fetching scores and student details:", error);
+      toast.error("Error fetching scores and student details:", error);
     }
   };
 
@@ -90,11 +96,11 @@ const AddFiles = () => {
   const fetchItemAnalysis = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/item-analyses/getitemanalysis?quizid=${quizid}`
+        `http://localhost:8080/api/item-analysis/getitemanalysis?quizid=${quizid}`
       );
       setItemAnalysis(response.data);
     } catch (error) {
-      console.error("Error fetching item analysis:", error);
+      toast.error("Error fetching item analysis:", error);
     }
   };
 
@@ -144,10 +150,11 @@ const AddFiles = () => {
             },
           }
         );
-        console.log("File uploaded successfully:", response.data);
+        toast.success(response.data);
         setShowModal(false);
       } catch (error) {
-        console.error("Error uploading file:", error);
+        setShowModal(false);
+        toast.error(error.response.data);
       } finally {
         setIsLoading(false);
       }
@@ -203,12 +210,15 @@ const AddFiles = () => {
           );
           setExpandedStudent(index);
         }
+        if (studentQuiz) {
+          setEditableText(studentQuiz.recognizedtext); 
+          setCurrentStudentId(studentQuiz.studentquizid);
+        }
       } catch (error) {
-        console.error("Error fetching student quiz details:", error);
+        toast.error("No Answers Found", error);
         if (error.response && error.response.status === 404) {
           setExpandErrors((prevErrors) => {
             const updatedErrors = [...prevErrors];
-            updatedErrors[index] = "No Answers Found";
             return updatedErrors;
           });
         } else {
@@ -225,6 +235,68 @@ const AddFiles = () => {
 
   const handleUserProfileClick = () => {
     navigate(`/userprofile/${username}`);
+  };
+
+  const handleEditClick = (studentQuizId) => {
+    const student = studentDetails.find(
+      (student) => student.studentQuiz.studentQuizId === studentQuizId
+    );
+
+    if (student) {
+      setEditableText(student.studentQuiz.recognizedtext);
+      setIsEditing(true);
+      toast.log("Editing for Quiz ID:", currentStudentId); 
+    } else {
+      toast.error("Student not found for Quiz ID:", quizid); 
+    }
+  };
+
+  const handleSaveClick = async () => {
+    if (!editableText) {
+      toast.error("Text is required to save changes.");
+      return; 
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/api/studentquiz/edit`,
+        {
+          studentQuizId: currentStudentId,
+          newText: editableText, 
+        }
+      );
+      toast.success(response.data); 
+      setIsEditing(false); 
+      setCurrentStudentId(null); 
+      window.location.reload();
+      toast.success("Successfully saved changes for Quiz ID:", quizid);
+    } catch (error) {
+      toast.error("Error saving changes: " + error.message);
+    }
+  };
+
+  const downloadExcel = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/studentquiz/getscoresandstudentids?quizid=${quizid}`
+      );
+      const scoresAndStudentDetails = response.data;
+
+      const worksheetData = Object.entries(scoresAndStudentDetails).map(
+        ([studentId, details]) => ({
+          "Student Name": `${details.firstName} ${details.lastName}`, 
+          Score: details.score,
+        })
+      );
+
+      const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+      const workbook = XLSX.utils.book_new(); 
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Scores"); 
+
+      XLSX.writeFile(workbook, "Student_Scores.xlsx");
+    } catch (error) {
+      toast.error("Error downloading Excel file: " + error.message);
+    }
   };
 
   return (
@@ -255,6 +327,7 @@ const AddFiles = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
       <div className="buttons-container">
         <button
           className={`class-files-button ${!showAnalysis ? "active" : ""}`}
@@ -275,10 +348,26 @@ const AddFiles = () => {
             backgroundColor: " #002c66",
             color: "white",
             borderRadius: "5px",
-            marginLeft: "1050px",
+            marginLeft: "850px",
           }}
         >
           Upload
+        </button>
+        <button
+          className="upload-button"
+          onClick={downloadExcel}
+          style={{
+            backgroundColor: " #002c66",
+            color: "white",
+            borderRadius: "5px",
+            marginLeft: "15px",
+            whiteSpace: "nowrap", 
+            overflow: "hidden", 
+            textOverflow: "ellipsis", 
+            width: "auto",
+          }}
+        >
+          Download Excel
         </button>
       </div>
       {showAnalysis ? (
@@ -317,13 +406,15 @@ const AddFiles = () => {
                 </tr>
               </thead>
               <tbody>
-              {itemAnalysis.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.itemNumber}</td>
-                    <td>{item.correctCount}</td>
-                    <td>{item.incorrectCount}</td>
-                  </tr>
-                ))}
+                {itemAnalysis
+                  .sort((a, b) => a.itemNumber - b.itemNumber)
+                  .map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.itemNumber}</td>
+                      <td>{item.correctCount}</td>
+                      <td>{item.incorrectCount}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -373,12 +464,57 @@ const AddFiles = () => {
                       <tbody>
                         <tr>
                           <td className="recognized-text">
-                            {student.studentQuiz.recognizedtext &&
+                            {isEditing ? (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
+                              >
+                                {editableText
+                                  .split("\n")
+                                  .slice(1) 
+                                  .map((line, i) => (
+                                    <input
+                                      key={i}
+                                      value={line}
+                                      onChange={(e) => {
+                                        const lines = editableText.split("\n");
+                                        lines[i + 1] = e.target.value; 
+                                        setEditableText(lines.join("\n")); 
+                                      }}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                          e.preventDefault();
+                                          const lines =
+                                            editableText.split("\n");
+                                          
+                                          lines.splice(i + 2, 0, "");
+                                          setEditableText(lines.join("\n"));
+                                        }
+                                      }}
+                                      style={{
+                                        border: "none",
+                                        borderBottom: "1px solid #ccc",
+                                        padding: "5px",
+                                        fontSize: "16px",
+                                        lineHeight: "1.5",
+                                        backgroundColor: "transparent",
+                                        color: "inherit",
+                                        width: "100%",
+                                      }}
+                                    />
+                                  ))}
+                              </div>
+                            ) : (
+                              student.studentQuiz.recognizedtext &&
                               student.studentQuiz.recognizedtext
                                 .split("\n")
-                                .slice(1)
-                                .map((line, i) => <p key={i}>{line}</p>)}
+                                .slice(1) 
+                                .map((line, i) => <p key={i}>{line}</p>)
+                            )}
                           </td>
+
                           <td className="recognized-text answer-key">
                             {answerKey.split("\n").map((line, i) => (
                               <p key={i}>{line}</p>
@@ -388,11 +524,27 @@ const AddFiles = () => {
                       </tbody>
                     </table>
                   </div>
-                </div>
-              )}
-              {expandedStudent === index && expandErrors[index] && (
-                <div className="additional-content">
-                  <div className="error-message">{expandErrors[index]}</div>
+                  <button
+                    onClick={() => {
+                      if (isEditing) {
+                        handleSaveClick(); 
+                      } else {
+                        handleEditClick(student.studentQuiz.studentQuizId); 
+                      }
+                    }}
+                    style={{
+                      marginTop: "10px",
+                      padding: "5px 10px",
+                      backgroundColor: "#002c66",
+                      fontSize: "15px",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {isEditing ? "Save" : "Edit"}
+                  </button>
                 </div>
               )}
             </div>

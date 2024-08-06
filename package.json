@@ -12,8 +12,11 @@
     "react-router": "^6.23.1",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.14.1",
+    "react-toastify": "^10.0.5",
     "sass": "^1.77.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",

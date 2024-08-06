@@ -74,11 +74,11 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 10px; /* Add margin to the right of each button */
+  margin-right: 10px;
 }
 
 .edit-button:last-child {
-  margin-right: 0; /* Remove the margin from the last button */
+  margin-right: 0;
 }
 
 .popup-button {
@@ -97,5 +97,4 @@
 .popup-message {
   font-family: "Inter", sans-serif;
   font-weight: bold;
-  background-color: #002c66;
 }
